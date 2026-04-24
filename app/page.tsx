@@ -49,8 +49,13 @@ const projectCards = [
 
 export default function Home() {
   const heroFigures = ["/mannetje 1.png", "/mannetje 2.png", "/mannetje 3.png"];
-  const switchIntervalMs = 5000;
-  const transitionMs = 1200;
+  const heroGradients = [
+    { from: "#020118", to: "#292541" },
+    { from: "#292541", to: "#9A3A0F" },
+    { from: "#9A3A0F", to: "#020118" },
+  ];
+  const switchIntervalMs = 5500;
+  const transitionMs = 1500;
   const [activeFigure, setActiveFigure] = useState(0);
   const [incomingFigure, setIncomingFigure] = useState<number | null>(null);
   const [isFigureAnimating, setIsFigureAnimating] = useState(false);
@@ -99,35 +104,52 @@ export default function Home() {
       <section
         className="relative min-h-screen overflow-hidden rounded-b-[56px]"
         style={{
-          backgroundImage:
-            "linear-gradient(to bottom, #020118, #292541), url('/paperlayout.png')",
-          backgroundSize: "cover, cover",
-          backgroundPosition: "center, top",
-          backgroundRepeat: "no-repeat, no-repeat",
+          backgroundImage: "url('/paperlayout.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "top",
+          backgroundRepeat: "no-repeat",
         }}
       >
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `linear-gradient(to bottom, ${heroGradients[activeFigure].from}, ${heroGradients[activeFigure].to})`,
+          }}
+        />
+        {incomingFigure !== null ? (
+          <div
+            className={`absolute inset-0 z-0 transition-opacity duration-[1500ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] ${isFigureAnimating ? "opacity-100" : "opacity-0"
+              }`}
+            style={{
+              backgroundImage: `linear-gradient(to bottom, ${heroGradients[incomingFigure].from}, ${heroGradients[incomingFigure].to})`,
+            }}
+          />
+        ) : null}
         <Image
           src="/st jan.png"
           alt="St Jan"
           fill
           sizes="100vw"
           priority
-          className="object-cover object-center opacity-35"
+          className="z-[1] object-cover object-center opacity-35"
         />
 
         <div className="relative z-10 mx-auto flex min-h-screen max-w-[1280px] flex-col px-6 pb-10 pt-8 md:px-12">
-          <div className="relative flex items-start justify-center">
-            <div className="relative w-[120px] md:w-[150px]" style={{ aspectRatio: "15 / 7" }}>
+          <div className="relative h-0">
+            <div
+              className="absolute left-1/2 top-0 z-[2] w-[320px] -translate-x-1/2 md:w-[430px] lg:w-[520px]"
+              style={{ aspectRatio: "15 / 7" }}
+            >
               <Image
                 src="/tj logo beige.png"
                 alt="TJ logo"
                 fill
-                sizes="(min-width: 768px) 150px, 120px"
+                sizes="(min-width: 1024px) 520px, (min-width: 768px) 430px, 320px"
                 className="object-contain"
                 priority
               />
             </div>
-            <div className="absolute right-[8%] top-10 flex items-baseline gap-3 md:right-[12%] md:top-12 md:gap-4">
+            <div className="absolute right-[8%] top-10 z-[2] flex items-baseline gap-3 md:right-[12%] md:top-12 md:gap-4">
               <p className="font-heading text-2xl text-[#E9E7DA] md:text-4xl">EST.</p>
               <p className="text-3xl text-[#CA5521] md:text-5xl">2005</p>
             </div>
@@ -135,7 +157,7 @@ export default function Home() {
 
           <div className="relative mt-16 flex flex-1 items-center justify-center">
             <div
-              className="absolute left-1/2 top-1/2 z-0 w-[220px] translate-x-[-78%] translate-y-[-52%] md:w-[320px] lg:w-[430px]"
+              className="absolute left-1/2 top-1/2 z-[6] w-[250px] translate-x-[-78%] translate-y-[-52%] md:w-[360px] lg:w-[480px]"
               style={{ aspectRatio: "7 / 10" }}
             >
               <Image
@@ -143,12 +165,11 @@ export default function Home() {
                 src={heroFigures[activeFigure]}
                 alt="Hero mannetje"
                 fill
-                sizes="(min-width: 1024px) 430px, (min-width: 768px) 320px, 220px"
-                className={`object-contain will-change-transform ${
-                  isFigureAnimating
-                    ? "transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]"
-                    : "transition-none"
-                } ${isFigureAnimating ? "-translate-x-[220%]" : "translate-x-0"
+                sizes="(min-width: 1024px) 480px, (min-width: 768px) 360px, 250px"
+                className={`object-contain will-change-transform ${isFigureAnimating
+                  ? "transition-transform duration-[1500ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]"
+                  : "transition-none"
+                  } ${isFigureAnimating ? "-translate-x-[220%]" : "translate-x-0"
                   }`}
               />
 
@@ -158,35 +179,36 @@ export default function Home() {
                   src={heroFigures[incomingFigure]}
                   alt="Hero mannetje incoming"
                   fill
-                  sizes="(min-width: 1024px) 430px, (min-width: 768px) 320px, 220px"
-                  className={`object-contain will-change-transform ${
-                    isFigureAnimating
-                      ? "transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]"
-                      : "transition-none"
-                  } ${isFigureAnimating ? "translate-x-0" : "translate-x-[220%]"
+                  sizes="(min-width: 1024px) 480px, (min-width: 768px) 360px, 250px"
+                  className={`object-contain will-change-transform ${isFigureAnimating
+                    ? "transition-transform duration-[1500ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]"
+                    : "transition-none"
+                    } ${isFigureAnimating ? "translate-x-0" : "translate-x-[220%]"
                     }`}
                 />
               ) : null}
             </div>
-            <div className="relative z-10 text-center">
-              <h1 className="font-heading text-6xl uppercase leading-[0.85] tracking-[0] text-[#E9E7DA] sm:text-7xl md:text-8xl lg:text-[140px]">
-                Tim
-              </h1>
-              <div className="relative inline-block">
-                <h2 className="font-heading text-6xl uppercase leading-[0.85] tracking-[0] text-[#E9E7DA] sm:text-7xl md:text-8xl lg:text-[140px]">
-                  Jonkergouw
-                </h2>
-                <span className="font-heading absolute left-full top-[-0.22em] ml-1 text-3xl leading-none md:ml-2 md:text-5xl lg:text-6xl">
-                  ™
-                </span>
+            <div className="relative text-center">
+              <div className="inline-block text-left">
+                <h1 className="font-heading relative z-[2] text-6xl uppercase leading-[0.85] tracking-[0] text-[#E9E7DA] sm:text-7xl md:text-8xl lg:text-[140px]">
+                  Tim
+                </h1>
+                <div className="relative z-[8] inline-block">
+                  <h2 className="font-heading text-6xl uppercase leading-[0.85] tracking-[0] text-[#E9E7DA] sm:text-7xl md:text-8xl lg:text-[140px]">
+                    Jonkergouw
+                  </h2>
+                  <span className="font-heading absolute left-full top-[-0.22em] ml-1 text-3xl leading-none md:ml-2 md:text-5xl lg:text-6xl">
+                    ™
+                  </span>
+                </div>
               </div>
-              <p className="mt-6 text-base uppercase tracking-[0.2em] text-[#E9E7DA] md:text-lg">
+              <p className="relative z-[8] mt-6 text-base uppercase tracking-[0.2em] text-[#E9E7DA] md:text-lg">
                 designer &amp; front-end develop
               </p>
             </div>
           </div>
 
-          <div className="absolute bottom-[2%] left-6 flex items-end md:left-12">
+          <div className="absolute bottom-[2%] left-6 z-[2] flex items-end md:left-12">
             <div className="flex items-center gap-1.5">
               <Image
                 src="/location orange.png"
@@ -203,19 +225,31 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-6 pb-16 pt-8 text-[#020118] md:px-12">
+      <section className="px-6 pb-16 pt-8 text-[#292441] md:px-12">
         <div className="mx-auto max-w-[1280px]">
-          <div className="h-10 w-full rounded-full bg-[#CA5521]" />
+          <div className="h-6 w-full bg-[#CA5521]" />
 
           <div className="grid gap-10 py-16 md:grid-cols-2 md:items-start">
             <div>
-              <h3 className="font-heading text-5xl uppercase text-[#020118] md:text-7xl">
+              <h3 className="font-heading text-5xl uppercase text-[#292441] md:text-7xl">
                 about me
               </h3>
-              <p className="mt-6 max-w-[520px] text-xl font-bold leading-relaxed text-[#1A1633] md:text-2xl">
-                Ik ben Tim Jonkergouw, designer en front-end developer met oog
-                voor detail, sterke typografie en concepten die visueel en
-                functioneel kloppen.
+              <p className="mt-6 max-w-[520px] text-lg font-bold leading-tight tracking-[-0.03em] text-[#1A1633] md:text-xl">
+                Hoi, ik ben Tim Jonkergouw, ik ben 20 jaar oud en momenteel bezig
+                met de bachelor HBO-ICT aan Fontys. Mijn focus ligt voornamelijk op
+                front-end development en media creation. Ik houd ervan om creatief
+                bezig te zijn en originele concepten tot leven te brengen.
+                <br />
+                <br />
+                In het eerste semester ben ik begonnen met de orientatiefase,
+                waarbij ik een breed beeld heb gekregen van de gehele
+                ICT-industrie. Al snel ontdekte ik dat front-end en media mijn
+                grootste interesses waren. Daarom heb ik in het tweede semester
+                gekozen voor de richting media, waarin ik veel heb gewerkt aan
+                ontwerpen en ook al een aanzienlijk deel heb geprogrammeerd. Hier
+                heb ik ook mijn propodeuse mee gehaald. In het derde semester ben
+                ik overgestapt naar front-end development. Nu, in het vierde
+                semester, ben ik bezig met media creation.
               </p>
             </div>
             <div className="relative h-[340px] overflow-hidden md:h-[420px]">
@@ -226,6 +260,9 @@ export default function Home() {
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
+              <p className="font-body absolute bottom-3 left-3 z-10 text-sm font-bold text-[#E9E7DA] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] md:text-base">
+                Behalen van Propodeuse in 2024/2025.
+              </p>
             </div>
           </div>
 
@@ -238,12 +275,23 @@ export default function Home() {
                 sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
+              <p className="font-body absolute bottom-3 left-3 z-10 text-sm font-bold text-[#E9E7DA] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] md:text-base">
+                Sint Jans kathedraal, &rsquo;s-Hertogenbosch
+              </p>
             </div>
-            <p className="text-xl font-bold leading-relaxed text-[#1A1633] md:text-2xl">
-              Mijn werk draait om heldere interfaces, karaktervolle visuele
-              keuzes en websites die niet alleen mooi zijn, maar ook intuïtief
-              werken. Van branding tot interactie vertaal ik ideeën naar
-              digitale ervaringen die blijven hangen.
+            <p className="text-lg font-bold leading-tight tracking-[-0.03em] text-[#1A1633] md:text-xl">
+              Ik kom uit &rsquo;s-Hertogenbosch, waar ik samenwoon met mijn ouders
+              en mijn zusje. Naast mijn studie ben ik actief als voetballer bij
+              FC Engelen Jo23-1, waar ik de vaste linksbuiten ben. Voetbal is al
+              een passie van mij sinds ik een heel klein jongetje ben.
+              <br />
+              <br />
+              In mijn vrije tijd ga ik graag op stap met vrienden, want
+              gezelligheid vind ik erg belangrijk. Daarnaast ben ik een groot
+              liefhebber van darten, een sport die ik regelmatig samen met
+              vrienden beoefen en waar ik ook graag naar kijk. Ook game ik graag
+              in mijn vrije tijd, waarbij EA FC en GTA V de meest gespeelde
+              titels zijn.
             </p>
           </div>
 
@@ -257,11 +305,11 @@ export default function Home() {
           </div>
 
           <div className="py-0">
-            <div className="h-3 w-full rounded-full bg-[#CA5521]" />
-            <h3 className="font-heading py-0 text-center text-7xl leading-none uppercase text-[#020118] md:text-[11rem]">
+            <div className="h-6 w-full bg-[#CA5521]" />
+            <h3 className="font-heading py-0 text-center text-7xl leading-none uppercase text-[#292441] md:text-[11rem]">
               Projects
             </h3>
-            <div className="h-3 w-full rounded-full bg-[#CA5521]" />
+            <div className="h-6 w-full bg-[#CA5521]" />
           </div>
 
           <div className="relative grid gap-8 py-10 md:block md:min-h-[1140px]">
@@ -272,7 +320,7 @@ export default function Home() {
                 className={`project-card relative block overflow-hidden p-0 ${project.cardClass}`}
               >
                 <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-[#E9E7DA] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-[#CA5521] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                     No.{project.id}
                   </p>
                   <h4 className="font-heading text-xl uppercase text-[#E9E7DA] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] md:text-2xl">
@@ -292,7 +340,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="h-10 w-full rounded-full bg-[#CA5521]" />
+          <div className="h-6 w-full bg-[#CA5521]" />
         </div>
       </section>
 

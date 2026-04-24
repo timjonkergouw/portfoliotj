@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Tim Jonkergouw
 
-## Getting Started
+Een interactieve portfolio-website gebouwd met Next.js (App Router), met focus op:
+- een custom hero met animaties en image carousel,
+- een visueel sterke about-sectie,
+- floating project cards met klikbare projectpagina's.
 
-First, run the development server:
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+
+## Projectstructuur
+
+Belangrijkste bestanden:
+
+- `app/page.tsx`  
+  Hoofdpagina met hero, about, projects en footer.
+- `app/projects/[slug]/page.tsx`  
+  Dynamische projectdetailpagina's.
+- `app/layout.tsx`  
+  Root layout + lokale fontconfiguratie.
+- `app/globals.css`  
+  Globale styles en animatie keyframes.
+- `public/`  
+  Alle gebruikte afbeeldingen en fonts.
+
+## Fonts
+
+Lokale fonts via `next/font/local`:
+
+- `public/fonts/AlteHaasGroteskBold.ttf`
+- `public/fonts/AlteHaasGroteskRegular.ttf`
+
+## Features
+
+- Hero section met gradient-overgangen gekoppeld aan carousel-switches.
+- Carousel met meerdere hero-figuren die in/uit schuiven.
+- Overlap layering voor een 3D-look tussen tekst en visual assets.
+- About-sectie met eigen copy en image captions.
+- Projects-sectie met floating animaties en doorklik naar detailpagina's.
+
+## Installatie en lokaal draaien
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open daarna [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev      # Start development server
+npm run lint     # ESLint checks
+npm run build    # Production build
+npm run start    # Start production server
+```
 
-## Learn More
+## Aanpassen van content
 
-To learn more about Next.js, take a look at the following resources:
+Meest gebruikte plekken:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Hero instellingen (carousel, timing, gradient): `app/page.tsx`
+- About teksten: `app/page.tsx`
+- Projects data (titels, afbeeldingen, links): `app/page.tsx`
+- Algemene animaties: `app/globals.css`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deze app kan direct gedeployed worden op [Vercel](https://vercel.com/), maar werkt ook op andere Node.js hostingplatformen.
