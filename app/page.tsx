@@ -296,15 +296,15 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center py-14">
-            <button
-              type="button"
+            <Link
+              href="/about"
               className="font-heading rounded-xl bg-[#292541] px-[6.25rem] py-7 text-3xl uppercase tracking-[0.08em] text-[#E9E7DA] transition hover:opacity-90"
             >
               Read More
-            </button>
+            </Link>
           </div>
 
-          <div className="py-0">
+          <div id="projects" className="py-0">
             <div className="h-6 w-full bg-[#CA5521]" />
             <h3 className="font-heading py-0 text-center text-7xl leading-none uppercase text-[#292441] md:text-[11rem]">
               Projects
@@ -344,7 +344,10 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="relative overflow-hidden rounded-t-[56px] bg-linear-to-b from-[#020118] to-[#292541] px-6 py-16 md:px-12">
+      <footer
+        id="contact"
+        className="relative overflow-hidden rounded-t-[56px] bg-linear-to-b from-[#020118] to-[#292541] px-6 py-16 md:px-12"
+      >
         <p className="font-heading pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-5xl uppercase tracking-[0.08em] text-[#E9E7DA]/25 md:text-8xl lg:text-[130px]">
           Tim Jonkergouw
         </p>

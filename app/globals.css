@@ -137,3 +137,19 @@ body {
   animation-name: projectFloatE;
   animation-duration: 3.3s;
 }
+
+@keyframes reelColumnMove {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.reel-track {
+  animation-name: reelColumnMove;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
