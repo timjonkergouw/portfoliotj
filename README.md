@@ -1,74 +1,50 @@
-# Portfolio Tim Jonkergouw
+# Tim Jonkergouw Portfolio
 
-Een interactieve portfolio-website gebouwd met Next.js (App Router), met focus op:
-- een custom hero met animaties en image carousel,
-- een visueel sterke about-sectie,
-- floating project cards met klikbare projectpagina's.
+Persoonlijke portfolio-website gebouwd met Next.js App Router.
 
-## Tech Stack
+## Stack
 
 - Next.js 16
 - React 19
 - TypeScript
 - Tailwind CSS 4
 
-## Projectstructuur
+## Pagina's
 
-Belangrijkste bestanden:
+- `app/page.tsx` - Home met hero, about-preview, projects en footer.
+- `app/about/page.tsx` - Uitgebreide about-pagina met services, school en skills.
+- `app/projects/[slug]/page.tsx` - Dynamische projectdetailpagina.
 
-- `app/page.tsx`  
-  Hoofdpagina met hero, about, projects en footer.
-- `app/projects/[slug]/page.tsx`  
-  Dynamische projectdetailpagina's.
-- `app/layout.tsx`  
-  Root layout + lokale fontconfiguratie.
-- `app/globals.css`  
-  Globale styles en animatie keyframes.
-- `public/`  
-  Alle gebruikte afbeeldingen en fonts.
+## Belangrijkste bestanden
 
-## Fonts
+- `app/layout.tsx` - Root layout en lokale fonts.
+- `app/globals.css` - Globale styles en keyframe-animaties.
+- `public/` - Afbeeldingen en fonts.
 
-Lokale fonts via `next/font/local`:
-
-- `public/fonts/AlteHaasGroteskBold.ttf`
-- `public/fonts/AlteHaasGroteskRegular.ttf`
-
-## Features
-
-- Hero section met gradient-overgangen gekoppeld aan carousel-switches.
-- Carousel met meerdere hero-figuren die in/uit schuiven.
-- Overlap layering voor een 3D-look tussen tekst en visual assets.
-- About-sectie met eigen copy en image captions.
-- Projects-sectie met floating animaties en doorklik naar detailpagina's.
-
-## Installatie en lokaal draaien
+## Lokaal draaien
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open daarna [http://localhost:3000](http://localhost:3000).
+Ga naar [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
 ```bash
-npm run dev      # Start development server
-npm run lint     # ESLint checks
-npm run build    # Production build
-npm run start    # Start production server
+npm run dev
+npm run lint
+npm run build
+npm run start
 ```
 
-## Aanpassen van content
+## Content snel aanpassen
 
-Meest gebruikte plekken:
-
-- Hero instellingen (carousel, timing, gradient): `app/page.tsx`
-- About teksten: `app/page.tsx`
-- Projects data (titels, afbeeldingen, links): `app/page.tsx`
-- Algemene animaties: `app/globals.css`
+- Home content en projectkaart-data: `app/page.tsx`
+- About content, school en skills: `app/about/page.tsx`
+- Project detaildata (`slug` mapping): `app/projects/[slug]/page.tsx`
 
 ## Deployment
 
-Deze app kan direct gedeployed worden op [Vercel](https://vercel.com/), maar werkt ook op andere Node.js hostingplatformen.
+Deploy op [Vercel](https://vercel.com/) of een andere Node.js host.

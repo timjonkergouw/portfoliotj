@@ -1,8 +1,8 @@
- "use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const slotPalette = ["#020118", "#292541", "#E9E7DA", "#B6AFA9", "#CA5521"];
 const carouselPhotos = [
@@ -32,6 +32,62 @@ const services = [
     title: "UX/UI Design",
     description:
       "Ik vertaal gebruikersbehoeften naar logische schermen en duidelijke interacties. Met focus op gebruiksgemak zorg ik dat bezoekers zonder moeite vinden wat ze zoeken.",
+  },
+];
+const careerTimeline = [
+  {
+    id: "timeline-fontys",
+    school: "Fontys ICT",
+    location: "Tilburg & Eindhoven",
+    period: "Nu",
+    title: "Momenteel HBO-ICT student",
+    description:
+      "Ik studeer nu HBO-ICT bij Fontys en focus mij op media creation en front-end development. Ik werk aan creatieve concepten, digitale beleving en het technisch uitwerken van sterke interfaces.",
+  },
+  {
+    id: "timeline-maurick",
+    school: "Maurick College",
+    location: "Vught",
+    period: "2023/2024",
+    title: "Havo diploma behaald",
+    description:
+      "Op het Maurick College heb ik mijn havo diploma behaald in 2023/2024. Daar heb ik een sterke basis gelegd in discipline, samenwerken en doelgericht werken.",
+  },
+];
+
+const technicalSkills = [
+  {
+    title: "Front-end Development",
+    description: "Next, React, Typescript",
+    value: 65,
+  },
+  {
+    title: "Web, UI & UX Design",
+    description: "Figma, Adobe Software",
+    value: 80,
+  },
+  {
+    title: "Gebruik van AI",
+    description: "ChatGPT, Cursor, Claude",
+    value: 70,
+  },
+];
+
+const softSkills = [
+  {
+    title: "Communicatie",
+    description: "Duidelijk communiceren",
+    value: 75,
+  },
+  {
+    title: "Samenwerken",
+    description: "Goed kunnen werken met iedereen",
+    value: 67,
+  },
+  {
+    title: "Probleemoplossend vermogen",
+    description: "Oplossingen bedenken bij problemen.",
+    value: 70,
   },
 ];
 
@@ -119,7 +175,39 @@ function buildReelItems(columnIndex: number) {
 
 export default function AboutPage() {
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
+  const [hasAnimatedSkills, setHasAnimatedSkills] = useState(false);
   const activeService = services[activeServiceIndex];
+  const skillsSectionRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollToTimelineItem = (id: string) => {
+    const target = document.getElementById(id);
+    if (!target) {
+      return;
+    }
+
+    const top = target.getBoundingClientRect().top + window.scrollY - 120;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const section = skillsSectionRef.current;
+    if (!section) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setHasAnimatedSkills(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.28 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <main
@@ -295,21 +383,38 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="border-t-4 border-[#292441] py-10 text-[#1A1633] md:py-14">
+        <section className="py-10 text-[#1A1633] md:py-14">
           <div className="max-w-[920px]">
-            <h2 className="font-heading text-4xl uppercase text-[#292441] md:text-6xl">
+            <h2 className="font-heading w-full rounded-full bg-[#292441] px-8 py-4 text-4xl uppercase text-[#E9E7DA] md:px-10 md:text-6xl">
               About me
             </h2>
             <p className="mt-4 text-lg leading-tight md:text-xl">
-              Ik ben Tim Jonkergouw, een creatieve front-end student die houdt van
-              sterke visuele concepten en strakke digitale ervaringen. Ik combineer
-              design en techniek om ideeën om te zetten naar websites die er niet
-              alleen goed uitzien, maar ook logisch en prettig werken.
+              Hi, my name is Tim Jonkergouw. I am 20 years old and I come from
+              &rsquo;s-Hertogenbosch in the Netherlands. Currently, I am studying ICT,
+              where I focus on Media Creation and front-end development.
+              <br />
+              <br />
+              I have a strong passion for creativity, especially when it comes to
+              designing and building digital experiences. What I enjoy most is the
+              process of turning ideas and visual designs into fully functional and
+              interactive webpages. Seeing a concept come to life in the browser gives
+              me a lot of satisfaction.
+              <br />
+              <br />
+              During my studies, I am continuously improving my skills in both design
+              and development, learning how to create user-friendly and visually
+              appealing interfaces. I like to experiment with different styles and
+              technologies, and I am always motivated to expand my knowledge and stay
+              up to date with the latest trends in web development.
+              <br />
+              <br />
+              In the future, I hope to further develop myself as a front-end developer
+              and contribute to creating engaging and high-quality digital products.
             </p>
           </div>
 
           <div className="mt-10">
-            <h3 className="font-heading text-4xl uppercase text-[#292441] md:text-6xl">
+            <h3 className="font-heading w-full rounded-full bg-[#292441] px-8 py-4 text-4xl uppercase text-[#E9E7DA] md:px-10 md:text-6xl">
               Services
             </h3>
 
@@ -348,6 +453,128 @@ export default function AboutPage() {
                     <p className="mt-2 text-lg leading-tight">{service.description}</p>
                   </article>
                 ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-14 border-t-4 border-[#292441] pb-20 pt-10 md:pt-12">
+            <h3 className="font-heading w-full rounded-full bg-[#292441] px-8 py-4 text-4xl uppercase text-[#E9E7DA] md:px-10 md:text-6xl">
+              School
+            </h3>
+
+            <div className="relative mt-8">
+              <div className="absolute bottom-[-34px] left-[calc(260px+2rem+28px)] top-6 hidden w-[6px] -translate-x-1/2 bg-linear-to-b from-[#292441] via-[#292441] to-transparent md:block" />
+
+              <div className="space-y-14 md:space-y-20">
+                {careerTimeline.map((item) => (
+                  <div
+                    key={item.id}
+                    className="grid gap-4 md:grid-cols-[260px_56px_1fr] md:items-start md:gap-8"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => scrollToTimelineItem(item.id)}
+                      className="group text-left"
+                    >
+                      <p className="font-heading text-3xl uppercase text-[#292441]/85 transition group-hover:text-[#292441]">
+                        {item.school}
+                      </p>
+                      <p className="text-lg leading-none text-[#292441]/85">{item.location}</p>
+                    </button>
+
+                    <div className="hidden justify-center pt-5 md:flex">
+                      <button
+                        type="button"
+                        onClick={() => scrollToTimelineItem(item.id)}
+                        aria-label={`Ga naar ${item.school}`}
+                        className="relative z-10 h-6 w-6 rounded-full border-4 border-[#292441] bg-[#E9E7DA] transition duration-300 hover:scale-110 hover:bg-[#CA5521]"
+                      />
+                    </div>
+
+                    <article
+                      id={item.id}
+                      className="scroll-mt-28 border-l-4 border-[#292441] pl-5"
+                    >
+                      <p className="font-heading text-base uppercase tracking-[0.08em] text-[#CA5521]">
+                        {item.period}
+                      </p>
+                      <h4 className="font-heading mt-1 text-3xl uppercase text-[#292441]">
+                        {item.title}
+                      </h4>
+                      <p className="mt-2 text-lg leading-tight">{item.description}</p>
+                    </article>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div
+            ref={skillsSectionRef}
+            className="mt-14 border-t-4 border-[#292441] pt-10 pb-16 md:pt-12 md:pb-20"
+          >
+            <h3 className="font-heading w-full rounded-full bg-[#292441] px-8 py-4 text-4xl uppercase text-[#E9E7DA] md:px-10 md:text-6xl">
+              Skills
+            </h3>
+
+            <div className="mt-10 flex flex-col gap-10 md:flex-row md:items-stretch md:gap-12">
+              <div className="flex-1">
+                <h3 className="font-heading text-3xl uppercase text-[#292441] md:text-4xl">
+                  Technical Skills
+                </h3>
+                <div className="mt-8 space-y-8">
+                  {technicalSkills.map((skill, index) => (
+                    <div key={skill.title}>
+                      <p className="font-heading text-2xl uppercase text-[#292441] md:text-3xl">
+                        {skill.title}
+                      </p>
+                      <p className="mt-1 text-base text-[#292441]/85">{skill.description}</p>
+                      <div className="relative mt-3 h-3 w-full overflow-hidden rounded-full bg-[#292441]">
+                        <div
+                          className="h-full rounded-full bg-[#CA5521] transition-[width] duration-1000 ease-out"
+                          style={{
+                            width: hasAnimatedSkills ? `${skill.value}%` : "0%",
+                            transitionDelay: `${index * 140}ms`,
+                          }}
+                          aria-hidden
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="h-[2px] w-full shrink-0 bg-[#292441]/40 md:hidden" />
+
+              <div
+                className="hidden w-[6px] shrink-0 rounded-full bg-[#292441] md:block"
+                aria-hidden
+              />
+
+              <div className="flex-1">
+                <h3 className="font-heading text-3xl uppercase text-[#292441] md:text-4xl">
+                  Soft Skills
+                </h3>
+                <div className="mt-8 space-y-8">
+                  {softSkills.map((skill, index) => (
+                    <div key={skill.title}>
+                      <p className="font-heading text-2xl uppercase text-[#292441] md:text-3xl">
+                        {skill.title}
+                      </p>
+                      <p className="mt-1 text-base text-[#292441]/85">{skill.description}</p>
+                      <div className="relative mt-3 h-3 w-full overflow-hidden rounded-full bg-[#292441]">
+                        <div
+                          className="h-full rounded-full bg-[#CA5521] transition-[width] duration-1000 ease-out"
+                          style={{
+                            width: hasAnimatedSkills ? `${skill.value}%` : "0%",
+                            transitionDelay: `${(index + technicalSkills.length) * 140}ms`,
+                          }}
+                          aria-hidden
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
