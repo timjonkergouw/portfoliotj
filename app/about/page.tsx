@@ -173,6 +173,10 @@ function buildReelItems(columnIndex: number) {
   });
 }
 
+const reelItemsByColumn = columnConfigs.map((_, columnIndex) =>
+  buildReelItems(columnIndex),
+);
+
 export default function AboutPage() {
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const [hasAnimatedSkills, setHasAnimatedSkills] = useState(false);
@@ -329,55 +333,56 @@ export default function AboutPage() {
 
             <div className="relative h-[700px] overflow-hidden border-b-4 border-[#292441]">
               <div className="grid h-full grid-cols-12 gap-3 md:gap-4">
-                {columnConfigs.map((column, columnIndex) => (
-                  <div
-                    key={`column-${columnIndex}`}
-                    className={`col-span-2 h-full overflow-hidden ${column.withTopOffset ? "pt-[316px]" : ""}`}
-                  >
-                    {(() => {
-                      const reelItems = buildReelItems(columnIndex);
-                      return (
-                        <div
-                          className="reel-track flex flex-col gap-3 md:gap-4"
-                          style={{
-                            animationDuration: `${column.speedSeconds}s`,
-                            animationDirection: column.direction,
-                          }}
-                        >
-                          {[0, 1].map((segmentIndex) => (
-                            <div
-                              key={`segment-${columnIndex}-${segmentIndex}`}
-                              className="flex flex-col gap-3 md:gap-4"
-                            >
-                              {reelItems.map((item, itemIndex) =>
-                                item.type === "photo" ? (
-                                  <div key={`item-photo-${columnIndex}-${segmentIndex}-${itemIndex}`} className="relative h-[190px] overflow-hidden">
-                                    <Image
-                                      src={item.src}
-                                      alt={`Carousel foto ${columnIndex + 1}-${itemIndex + 1}`}
-                                      fill
-                                      sizes="(min-width: 980px) 16vw, 160px"
-                                      className="object-cover"
-                                    />
-                                  </div>
-                                ) : (
-                                  <div
-                                    key={`item-block-${columnIndex}-${segmentIndex}-${itemIndex}`}
-                                    className="w-full"
-                                    style={{
-                                      height: `${item.height}px`,
-                                      backgroundColor: item.color,
-                                    }}
+                {columnConfigs.map((column, columnIndex) => {
+                  const reelItems = reelItemsByColumn[columnIndex];
+                  return (
+                    <div
+                      key={`column-${columnIndex}`}
+                      className={`col-span-2 h-full overflow-hidden ${column.withTopOffset ? "pt-[316px]" : ""}`}
+                    >
+                      <div
+                        className="reel-track flex flex-col gap-3 md:gap-4"
+                        style={{
+                          animationDuration: `${column.speedSeconds}s`,
+                          animationDirection: column.direction,
+                        }}
+                      >
+                        {[0, 1].map((segmentIndex) => (
+                          <div
+                            key={`segment-${columnIndex}-${segmentIndex}`}
+                            className="flex flex-col gap-3 md:gap-4"
+                          >
+                            {reelItems.map((item, itemIndex) =>
+                              item.type === "photo" ? (
+                                <div
+                                  key={`item-photo-${columnIndex}-${segmentIndex}-${itemIndex}`}
+                                  className="relative h-[190px] overflow-hidden"
+                                >
+                                  <Image
+                                    src={item.src}
+                                    alt={`Carousel foto ${columnIndex + 1}-${itemIndex + 1}`}
+                                    fill
+                                    sizes="(min-width: 980px) 16vw, 160px"
+                                    className="object-cover"
                                   />
-                                ),
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      );
-                    })()}
-                  </div>
-                ))}
+                                </div>
+                              ) : (
+                                <div
+                                  key={`item-block-${columnIndex}-${segmentIndex}-${itemIndex}`}
+                                  className="w-full"
+                                  style={{
+                                    height: `${item.height}px`,
+                                    backgroundColor: item.color,
+                                  }}
+                                />
+                              ),
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

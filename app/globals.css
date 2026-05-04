@@ -154,3 +154,15 @@ body {
   will-change: transform;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    animation: none;
+    will-change: auto;
+  }
+
+  .reel-track {
+    animation: none;
+    will-change: auto;
+  }
+}
+
