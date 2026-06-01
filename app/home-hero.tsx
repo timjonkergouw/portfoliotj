@@ -3,11 +3,21 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-const heroFigures = ["/mannetje 1.png", "/mannetje 2.png", "/mannetje 3.png"];
+const heroFigures = [
+  "/tim4.png",
+  "/tim2.png",
+  "/tim6.png",
+  "/tim3.png",
+  "/tim5.png",
+  "/tim1.png",
+];
 const heroGradients = [
-  { from: "#020118", to: "#292541" },
+  { from: "#020118", to: "#9A3A0F" },
   { from: "#292541", to: "#9A3A0F" },
+  { from: "#292541", to: "#020118" },
   { from: "#9A3A0F", to: "#020118" },
+  { from: "#9A3A0F", to: "#292541" },
+  { from: "#020118", to: "#292541" },
 ];
 const switchIntervalMs = 5500;
 const transitionMs = 1500;
@@ -132,7 +142,7 @@ export default function HomeHero() {
             <Image
               key={`active-${activeFigure}`}
               src={heroFigures[activeFigure]}
-              alt="Hero mannetje"
+              alt="Tim Jonkergouw"
               fill
               sizes="(min-width: 1024px) 480px, (min-width: 768px) 360px, 250px"
               className={`object-contain will-change-transform ${
@@ -148,7 +158,7 @@ export default function HomeHero() {
               <Image
                 key={`incoming-${incomingFigure}`}
                 src={heroFigures[incomingFigure]}
-                alt="Hero mannetje incoming"
+                alt="Tim Jonkergouw incoming"
                 fill
                 sizes="(min-width: 1024px) 480px, (min-width: 768px) 360px, 250px"
                 className={`object-contain will-change-transform ${

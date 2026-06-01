@@ -150,24 +150,26 @@ export default function Home() {
               <Link
                 key={project.id}
                 href={project.href}
-                className={`project-card relative block overflow-hidden p-0 ${project.cardClass}`}
+                className={`project-card group relative z-0 block p-0 hover:z-20 focus-visible:z-20 ${project.cardClass}`}
               >
-                <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-[#CA5521] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                    No.{project.id}
-                  </p>
-                  <h4 className="font-heading text-xl uppercase text-[#E9E7DA] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] md:text-2xl">
-                    {project.name}
-                  </h4>
-                </div>
-                <div className="relative h-[220px] w-full overflow-hidden rounded-none md:h-[250px] lg:h-[290px]">
-                  <Image
-                    src={project.image}
-                    alt={project.name}
-                    fill
-                    sizes="(min-width: 1024px) 560px, (min-width: 768px) 440px, 100vw"
-                    className="object-contain object-center"
-                  />
+                <div className="project-card-inner origin-center transition-transform duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.06] group-focus-visible:scale-[1.06]">
+                  <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-[#CA5521] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                      No.{project.id}
+                    </p>
+                    <h4 className="font-heading text-xl uppercase text-[#E9E7DA] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] md:text-2xl">
+                      {project.name}
+                    </h4>
+                  </div>
+                  <div className="relative h-[220px] w-full overflow-hidden rounded-none md:h-[250px] lg:h-[290px]">
+                    <Image
+                      src={project.image}
+                      alt={project.name}
+                      fill
+                      sizes="(min-width: 1024px) 560px, (min-width: 768px) 440px, 100vw"
+                      className="object-contain object-center"
+                    />
+                  </div>
                 </div>
               </Link>
             ))}

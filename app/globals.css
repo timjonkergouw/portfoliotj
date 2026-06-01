@@ -154,10 +154,35 @@ body {
   will-change: transform;
 }
 
+@keyframes inspiration-expand-in {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.inspiration-expanded-image {
+  animation: inspiration-expand-in 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .inspiration-expanded-image {
+    animation: none;
+  }
+
   .project-card {
     animation: none;
     will-change: auto;
+  }
+
+  .project-card-inner,
+  .project-card-inner img {
+    transition: none;
+    transform: none;
   }
 
   .reel-track {
