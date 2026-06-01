@@ -3,7 +3,7 @@ export type ProjectSectionId = "idea" | "design" | "develop";
 export type InspirationSlide = {
   src: string;
   caption: string;
-  source: string;
+  source?: string;
   alt?: string;
 };
 
@@ -11,8 +11,10 @@ export type ProjectSection = {
   id: ProjectSectionId;
   title: string;
   description: string;
+  afterInspiration?: string;
   images?: string[];
   inspirationSlides?: InspirationSlide[];
+  secondarySlides?: InspirationSlide[];
 };
 
 export type Project = {
@@ -71,6 +73,40 @@ export const projects: Record<string, Project> = {
               "Bold contrasten en grafische shirts die ik heb vertaald naar eigen Fioresque designs.",
             source: "Suspicious Antwerp",
             alt: "Suspicious Antwerp inspiratie",
+          },
+        ],
+        afterInspiration:
+          "Daarnaast ben ik op zoek gegaan naar een goede naam. Eerst kwam ik uit op Fiori, wat bloem betekent in het Italiaans. Deze naam heb ik verder uitgewerkt en ik heb er ook verschillende designs voor gemaakt. Uiteindelijk vond ik deze naam toch niet helemaal passen bij wat ik voor ogen had. Daarom heb ik besloten om alles te rebranden naar Fioresque. Deze naam vind ik net wat chiquer klinken, terwijl het nog steeds iets van het oorspronkelijke Fiori behoudt. Hierdoor blijft de link met bloemen en de inspiratie achter het merk bestaan.",
+        secondarySlides: [
+          {
+            src: "/fioresque/fiori/Fiori logo.png",
+            caption: "Eerste logo-exploratie voor het merk Fiori.",
+            alt: "Fiori logo",
+          },
+          {
+            src: "/fioresque/fiori/Fiori animatie loop.gif",
+            caption: "Geanimeerde loop als onderdeel van de eerste merkidentiteit.",
+            alt: "Fiori animatie",
+          },
+          {
+            src: "/fioresque/fiori/Fiori Tropisch tekst.png",
+            caption: "Typografie en tropische stijl binnen de Fiori branding.",
+            alt: "Fiori tropisch tekst",
+          },
+          {
+            src: "/fioresque/fiori/Bloemhuis design.png",
+            caption: "Bloemhuis design als visueel onderdeel van de collectie.",
+            alt: "Bloemhuis design",
+          },
+          {
+            src: "/fioresque/fiori/Vaas met tekst.png",
+            caption: "Vaas met tekst als experiment binnen de Fiori designs.",
+            alt: "Vaas met tekst",
+          },
+          {
+            src: "/fioresque/fiori/Fiori fruit design 2.png",
+            caption: "Fruit design als speels element in de eerste ontwerpen.",
+            alt: "Fiori fruit design",
           },
         ],
       },

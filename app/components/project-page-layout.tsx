@@ -82,6 +82,19 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
               <InspirationSlideshow slides={section.inspirationSlides} />
             ) : null}
 
+            {section.afterInspiration ? (
+              <p className="mt-8 max-w-[900px] text-lg leading-relaxed md:text-xl">
+                {section.afterInspiration}
+              </p>
+            ) : null}
+
+            {section.secondarySlides && section.secondarySlides.length > 0 ? (
+              <InspirationSlideshow
+                slides={section.secondarySlides}
+                showSource={false}
+              />
+            ) : null}
+
             {section.images && section.images.length > 0 ? (
               <div className="mt-8 grid gap-6 sm:grid-cols-2">
                 {section.images.map((src) => (

@@ -6,6 +6,7 @@ import type { InspirationSlide } from "@/app/projects/project-data";
 
 type InspirationSlideshowProps = {
   slides: InspirationSlide[];
+  showSource?: boolean;
 };
 
 type LoopedSlide = InspirationSlide & {
@@ -63,6 +64,7 @@ function getModalFrameStyle(
 
 export default function InspirationSlideshow({
   slides,
+  showSource = true,
 }: InspirationSlideshowProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const loopWidthRef = useRef(0);
@@ -480,6 +482,7 @@ export default function InspirationSlideshow({
                     fill
                     sizes="340px"
                     draggable={false}
+                    unoptimized={slide.src.endsWith(".gif")}
                     className="pointer-events-none object-cover"
                   />
                 </div>
@@ -503,13 +506,15 @@ export default function InspirationSlideshow({
             className="pointer-events-none fixed z-[51] overflow-hidden border-2 border-[#292441] bg-[#E9E7DA] shadow-[0_20px_60px_rgba(2,1,24,0.45)] transition-[top,left,width,height] duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)]"
             style={getModalFrameStyle(expanded)}
           >
-            <p
-              className={`absolute left-0 top-0 z-10 bg-[#292441]/85 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#E9E7DA] transition-opacity duration-500 md:text-xs ${
-                expanded.phase === "open" ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              Bron: {expanded.slide.source}
-            </p>
+            {showSource && expanded.slide.source ? (
+              <p
+                className={`absolute left-0 top-0 z-10 bg-[#292441]/85 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#E9E7DA] transition-opacity duration-500 md:text-xs ${
+                  expanded.phase === "open" ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                Bron: {expanded.slide.source}
+              </p>
+            ) : null}
             <Image
               src={expanded.slide.src}
               alt={expanded.slide.alt ?? ""}
@@ -517,6 +522,7 @@ export default function InspirationSlideshow({
               sizes="(min-width: 768px) 640px, 90vw"
               className="object-contain p-2"
               priority
+              unoptimized={expanded.slide.src.endsWith(".gif")}
             />
           </div>
           <p
