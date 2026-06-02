@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const heroFigures = [
-  "/tim4.png",
-  "/tim2.png",
-  "/tim6.png",
-  "/tim3.png",
-  "/tim5.png",
-  "/tim1.png",
+  "/tim4 1.svg",
+  "/tim2 1.svg",
+  "/tim6 1.svg",
+  "/tim1 1.svg",
+  "/tim5 1.svg",
+  "/tim3 1.svg",
 ];
 const heroGradients = [
   { from: "#020118", to: "#9A3A0F" },
@@ -78,7 +78,7 @@ export default function HomeHero() {
 
   return (
     <section
-      className="relative min-h-screen overflow-hidden rounded-b-[56px]"
+      className="relative min-h-[100svh] overflow-hidden rounded-b-[32px] sm:rounded-b-[48px] md:rounded-b-[56px]"
       style={{
         backgroundImage: "url('/paperlayout.png')",
         backgroundSize: "cover",
@@ -94,27 +94,28 @@ export default function HomeHero() {
       />
       {incomingFigure !== null ? (
         <div
-          className={`absolute inset-0 z-0 transition-opacity duration-[1500ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] ${
-            isFigureAnimating ? "opacity-100" : "opacity-0"
-          }`}
+          className={`absolute inset-0 z-0 transition-opacity duration-[1500ms] ease-[cubic-bezier(0.22,0.61,0.36,1)] ${isFigureAnimating ? "opacity-100" : "opacity-0"
+            }`}
           style={{
             backgroundImage: `linear-gradient(to bottom, ${heroGradients[incomingFigure].from}, ${heroGradients[incomingFigure].to})`,
           }}
         />
       ) : null}
-      <Image
-        src="/st jan.png"
-        alt="St Jan"
-        fill
-        sizes="100vw"
-        priority
-        className="z-[1] object-cover object-center opacity-35"
-      />
+      <div className="pointer-events-none absolute inset-0 z-[1]">
+        <Image
+          src="/st jan.svg"
+          alt="St Jan"
+          fill
+          sizes="100vw"
+          priority
+          className="object-contain object-bottom opacity-35"
+        />
+      </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-[1280px] flex-col px-6 pb-10 pt-8 md:px-12">
+      <div className="site-shell relative flex min-h-[100svh] flex-col px-4 pb-8 pt-6 sm:px-6 sm:pb-10 sm:pt-8 md:px-10 lg:px-12">
         <div className="relative h-0">
           <div
-            className="absolute left-1/2 top-0 z-[2] w-[320px] -translate-x-1/2 md:w-[430px] lg:w-[520px]"
+            className="absolute left-1/2 top-0 z-[2] w-[min(82vw,320px)] -translate-x-1/2 sm:w-[360px] md:w-[400px] lg:w-[460px]"
             style={{ aspectRatio: "15 / 7" }}
           >
             <Image
@@ -126,82 +127,74 @@ export default function HomeHero() {
               priority
             />
           </div>
-          <div className="absolute right-[8%] top-10 z-[2] flex items-baseline gap-3 md:right-[12%] md:top-12 md:gap-4">
-            <p className="font-heading text-2xl text-[#E9E7DA] md:text-4xl">
+          <div className="absolute right-[4%] top-8 z-[2] flex items-baseline gap-2 sm:right-[8%] sm:top-10 sm:gap-3 md:top-12">
+            <p className="font-heading text-lg text-[#E9E7DA] sm:text-2xl md:text-3xl">
               EST.
             </p>
-            <p className="text-3xl text-[#CA5521] md:text-5xl">2005</p>
+            <p className="text-xl text-[#CA5521] sm:text-3xl md:text-4xl">2005</p>
           </div>
         </div>
 
-        <div className="relative mt-16 flex flex-1 items-center justify-center">
-          <div
-            className="absolute left-1/2 top-1/2 z-[6] w-[250px] translate-x-[-78%] translate-y-[-52%] md:w-[360px] lg:w-[480px]"
-            style={{ aspectRatio: "7 / 10" }}
-          >
-            <Image
-              key={`active-${activeFigure}`}
-              src={heroFigures[activeFigure]}
-              alt="Tim Jonkergouw"
-              fill
-              sizes="(min-width: 1024px) 480px, (min-width: 768px) 360px, 250px"
-              className={`object-contain will-change-transform ${
-                isFigureAnimating
-                  ? "transition-transform duration-[1500ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]"
-                  : "transition-none"
-              } ${
-                isFigureAnimating ? "-translate-x-[220%]" : "translate-x-0"
-              }`}
-            />
+        <div className="pointer-events-none absolute bottom-0 left-1/2 z-[6] h-[min(84svh,920px)] w-[min(58vw,300px)] -translate-x-[78%] sm:w-[340px] md:h-[min(86svh,960px)] md:w-[420px] lg:w-[500px]">
+          <Image
+            key={`active-${activeFigure}`}
+            src={heroFigures[activeFigure]}
+            alt="Tim Jonkergouw"
+            fill
+            sizes="(min-width: 1024px) 500px, (min-width: 768px) 420px, 300px"
+            className={`object-contain object-bottom will-change-transform ${isFigureAnimating
+              ? "transition-transform duration-[1500ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]"
+              : "transition-none"
+              } ${isFigureAnimating ? "-translate-x-[220%]" : "translate-x-0"}`}
+          />
 
-            {incomingFigure !== null ? (
-              <Image
-                key={`incoming-${incomingFigure}`}
-                src={heroFigures[incomingFigure]}
-                alt="Tim Jonkergouw incoming"
-                fill
-                sizes="(min-width: 1024px) 480px, (min-width: 768px) 360px, 250px"
-                className={`object-contain will-change-transform ${
-                  isFigureAnimating
-                    ? "transition-transform duration-[1500ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]"
-                    : "transition-none"
-                } ${
-                  isFigureAnimating ? "translate-x-0" : "translate-x-[220%]"
-                }`}
-              />
-            ) : null}
-          </div>
+          {incomingFigure !== null ? (
+            <Image
+              key={`incoming-${incomingFigure}`}
+              src={heroFigures[incomingFigure]}
+              alt="Tim Jonkergouw incoming"
+              fill
+              sizes="(min-width: 1024px) 500px, (min-width: 768px) 420px, 300px"
+              className={`object-contain object-bottom will-change-transform ${isFigureAnimating
+                ? "transition-transform duration-[1500ms] ease-[cubic-bezier(0.22,0.61,0.36,1)]"
+                : "transition-none"
+                } ${isFigureAnimating ? "translate-x-0" : "translate-x-[220%]"}`}
+            />
+          ) : null}
+        </div>
+
+        <div className="relative mt-10 flex flex-1 items-center justify-center sm:mt-14 md:mt-16">
           <div className="relative text-center">
             <div className="inline-block text-left">
-              <h1 className="font-heading relative z-[2] text-6xl uppercase leading-[0.85] tracking-[0] text-[#E9E7DA] sm:text-7xl md:text-8xl lg:text-[140px]">
+              <h1 className="font-heading relative z-[2] text-[clamp(2.75rem,11vw,5.5rem)] uppercase leading-[0.85] tracking-[0] text-[#E9E7DA] md:text-[clamp(4rem,9vw,7rem)] lg:text-[120px]">
                 Tim
               </h1>
               <div className="relative z-[8] inline-block">
-                <h2 className="font-heading text-6xl uppercase leading-[0.85] tracking-[0] text-[#E9E7DA] sm:text-7xl md:text-8xl lg:text-[140px]">
+                <h2 className="font-heading text-[clamp(2.75rem,11vw,5.5rem)] uppercase leading-[0.85] tracking-[0] text-[#E9E7DA] md:text-[clamp(4rem,9vw,7rem)] lg:text-[120px]">
                   Jonkergouw
                 </h2>
-                <span className="font-heading absolute left-full top-[-0.22em] ml-1 text-3xl leading-none md:ml-2 md:text-5xl lg:text-6xl">
+                <span className="font-heading absolute left-full top-[-0.22em] ml-0.5 text-xl leading-none sm:ml-1 sm:text-3xl md:text-4xl">
                   ™
                 </span>
               </div>
             </div>
-            <p className="relative z-[8] mt-6 text-base uppercase tracking-[0.2em] text-[#E9E7DA] md:text-lg">
+            <p className="relative z-[8] mt-4 px-2 text-xs uppercase tracking-[0.16em] text-[#E9E7DA] sm:mt-6 sm:text-sm md:text-base">
               designer &amp; front-end develop
             </p>
           </div>
         </div>
 
-        <div className="absolute bottom-[2%] left-6 z-[2] flex items-end md:left-12">
+        <div className="absolute bottom-[2%] left-4 z-[2] flex max-w-[min(92vw,360px)] items-end sm:left-6 md:left-10">
           <div className="flex items-center gap-1.5">
             <Image
               src="/location orange.png"
               alt="Location"
               width={22}
               height={28}
-              className="h-auto w-8 md:w-10"
+              className="h-auto w-6 shrink-0 sm:w-8"
             />
-            <p className="text-2xl font-bold text-[#E9E7DA] md:text-3xl">
-              <span className="text-lg md:text-2xl">&rsquo;s-</span>
+            <p className="text-base font-bold leading-tight text-[#E9E7DA] sm:text-xl md:text-2xl">
+              <span className="text-sm sm:text-lg">&rsquo;s-</span>
               Hertogenbosch
             </p>
           </div>

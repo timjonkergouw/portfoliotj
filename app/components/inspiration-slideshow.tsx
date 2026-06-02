@@ -540,7 +540,7 @@ export default function InspirationSlideshow({
           <button
             type="button"
             onClick={beginClose}
-            className={`font-heading fixed z-[52] rounded-md bg-[#CA5521] px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-[#E9E7DA] transition-all duration-500 hover:opacity-90 ${
+            className={`btn-accent-sm fixed z-[52] transition-all duration-500 ${
               expanded.phase === "open"
                 ? "opacity-100"
                 : "pointer-events-none opacity-0"

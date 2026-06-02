@@ -1,9 +1,18 @@
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/app/projects/project-data";
-import InspirationSlideshow from "@/app/components/inspiration-slideshow";
-import LogoScrollShowcase from "@/app/components/logo-scroll-showcase";
 import SiteHeader from "@/app/components/site-header";
+
+const FlipInspirationCards = dynamic(
+  () => import("@/app/components/flip-inspiration-cards"),
+);
+const InspirationSlideshow = dynamic(
+  () => import("@/app/components/inspiration-slideshow"),
+);
+const LogoScrollShowcase = dynamic(
+  () => import("@/app/components/logo-scroll-showcase"),
+);
 
 const paperBackgroundStyle = {
   backgroundImage: "url('/paperlayout.png')",
@@ -13,11 +22,7 @@ const paperBackgroundStyle = {
 } as const;
 
 function SectionHeading({ title }: { title: string }) {
-  return (
-    <h2 className="font-heading w-full rounded-full bg-[#292441] px-8 py-4 text-4xl uppercase text-[#E9E7DA] md:px-10 md:text-6xl">
-      {title}
-    </h2>
-  );
+  return <h2 className="site-section-heading">{title}</h2>;
 }
 
 type ProjectPageLayoutProps = {
@@ -27,44 +32,52 @@ type ProjectPageLayoutProps = {
 export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
   return (
     <main
-      className="font-body min-h-screen px-6 py-8 font-bold text-[#292441] md:px-12"
+      className="font-body site-page min-h-screen font-bold text-[#292441]"
       style={paperBackgroundStyle}
     >
-      <div className="mx-auto max-w-[1280px]">
+      <div className="site-shell">
         <SiteHeader />
 
         <div className="mt-4 border-t-4 border-[#292441] pt-10">
           <Link
             href="/#projects"
-            className="font-heading inline-block rounded-md bg-[#CA5521] px-3 py-1.5 text-xs uppercase tracking-[0.08em] text-[#E9E7DA] transition hover:opacity-90"
+            className="btn-accent-sm"
           >
-            Back to projects
+            Terug naar projecten
           </Link>
 
-          <div className="mt-8 grid gap-8 md:grid-cols-[1fr_1.1fr] md:items-end">
+          <div className="mt-6 grid gap-6 sm:mt-8 sm:gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-end">
             <div>
               <p className="text-[10px] uppercase tracking-[0.18em] text-[#CA5521]">
                 No.{project.number}
               </p>
               {project.headerLogo ? (
-                <div className="relative mt-3 h-[56px] w-[280px] md:h-[72px] md:w-[360px]">
+                <div
+                  className={`relative mt-3 w-full ${
+                    project.headerLogoClassName ??
+                    "h-[140px] max-w-[640px] md:h-[200px] md:max-w-[900px]"
+                  }`}
+                >
                   <Image
                     src={project.headerLogo}
                     alt={`${project.title} logo`}
                     fill
-                    sizes="(min-width: 768px) 360px, 280px"
+                    sizes={
+                      project.headerLogoSizes ??
+                      "(min-width: 768px) 900px, 640px"
+                    }
                     className="object-contain object-left"
                   />
                 </div>
               ) : null}
-              <h1 className="font-heading mt-2 text-6xl uppercase leading-[0.9] md:text-8xl">
+              <h1 className="font-heading mt-2 text-4xl uppercase leading-[0.9] sm:text-5xl md:text-6xl lg:text-7xl">
                 {project.title}
               </h1>
-              <p className="mt-6 max-w-[520px] text-lg font-bold leading-tight tracking-[-0.03em]">
+              <p className="mt-4 max-w-[520px] text-base font-bold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-lg">
                 {project.intro}
               </p>
             </div>
-            <div className="relative h-[280px] w-full md:h-[380px]">
+            <div className="relative h-[220px] w-full sm:h-[260px] lg:h-[340px]">
               <Image
                 src={project.image}
                 alt={project.title}
@@ -85,9 +98,14 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
             className={`${index === 0 ? "mt-14" : "mt-16"} border-t-4 border-[#292441] pt-10 md:pt-12`}
           >
             <SectionHeading title={section.title} />
-            <p className="mt-6 max-w-[900px] text-lg leading-relaxed md:text-xl">
+            <p className="mt-4 max-w-[900px] text-base leading-relaxed sm:mt-6 sm:text-lg md:text-xl">
               {section.description}
             </p>
+
+            {section.flipInspirationCards &&
+            section.flipInspirationCards.length > 0 ? (
+              <FlipInspirationCards cards={section.flipInspirationCards} />
+            ) : null}
 
             {section.inspirationSlides &&
             section.inspirationSlides.length > 0 ? (
@@ -95,7 +113,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
             ) : null}
 
             {section.afterInspiration ? (
-              <p className="mt-8 max-w-[900px] text-lg leading-relaxed md:text-xl">
+              <p className="mt-6 max-w-[900px] text-base leading-relaxed sm:mt-8 sm:text-lg md:text-xl">
                 {section.afterInspiration}
               </p>
             ) : null}
@@ -109,7 +127,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
 
             {section.figmaEmbedUrl ? (
               <div className="mt-8">
-                <h4 className="font-heading text-2xl uppercase text-[#292441] md:text-3xl">
+                <h4 className="font-heading text-xl uppercase text-[#292441] md:text-2xl">
                   Interactieve Figma
                 </h4>
                 <div className="mt-4 overflow-hidden border-2 border-[#292441]/30 bg-[#E9E7DA]/40">
@@ -127,14 +145,14 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
                     rel="noreferrer"
                     className="mt-3 inline-block text-sm uppercase tracking-[0.08em] text-[#292441] underline underline-offset-4 hover:opacity-70"
                   >
-                    Open in Figma
+                    Openen in Figma
                   </Link>
                 ) : null}
               </div>
             ) : null}
 
             {section.afterFigma ? (
-              <p className="mt-8 max-w-[900px] text-lg leading-relaxed md:text-xl">
+              <p className="mt-6 max-w-[900px] text-base leading-relaxed sm:mt-8 sm:text-lg md:text-xl">
                 {section.afterFigma}
               </p>
             ) : null}
@@ -145,7 +163,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
 
             {section.websiteEmbedUrl ? (
               <div className="mt-8">
-                <h4 className="font-heading text-2xl uppercase text-[#292441] md:text-3xl">
+                <h4 className="font-heading text-xl uppercase text-[#292441] md:text-2xl">
                   Live website
                 </h4>
                 <div className="mt-4 overflow-hidden border-2 border-[#292441]/30 bg-[#E9E7DA]/40">
@@ -168,34 +186,15 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
                 ) : null}
               </div>
             ) : null}
-
-            {section.images && section.images.length > 0 ? (
-              <div className="mt-8 grid gap-6 sm:grid-cols-2">
-                {section.images.map((src) => (
-                  <div
-                    key={src}
-                    className="relative aspect-4/3 overflow-hidden border-2 border-[#292441]/20 bg-[#E9E7DA]/40"
-                  >
-                    <Image
-                      src={src}
-                      alt=""
-                      fill
-                      sizes="(min-width: 640px) 50vw, 100vw"
-                      className="object-contain p-4"
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : null}
           </section>
         ))}
 
         <div className="pb-20 pt-16">
           <Link
             href="/#projects"
-            className="font-heading inline-block rounded-xl bg-[#292541] px-8 py-3 text-xl uppercase tracking-[0.08em] text-[#E9E7DA] transition hover:opacity-90 md:px-10 md:text-2xl"
+            className="btn-primary"
           >
-            Alle projects
+            Alle projecten
           </Link>
         </div>
       </div>
