@@ -131,7 +131,7 @@ export default function Home() {
           <div className="flex justify-center py-14">
             <Link
               href="/about"
-              className="font-heading rounded-xl bg-[#292541] px-[6.25rem] py-7 text-3xl uppercase tracking-[0.08em] text-[#E9E7DA] transition hover:opacity-90"
+              className="font-heading rounded-xl bg-[#292541] px-16 py-5 text-2xl uppercase tracking-[0.08em] text-[#E9E7DA] transition hover:opacity-90"
             >
               Read More
             </Link>

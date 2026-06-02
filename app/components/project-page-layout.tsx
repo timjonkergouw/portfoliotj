@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/app/projects/project-data";
 import InspirationSlideshow from "@/app/components/inspiration-slideshow";
+import LogoScrollShowcase from "@/app/components/logo-scroll-showcase";
 import SiteHeader from "@/app/components/site-header";
 
 const paperBackgroundStyle = {
@@ -26,7 +27,7 @@ type ProjectPageLayoutProps = {
 export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
   return (
     <main
-      className="font-body min-h-screen px-6 py-8 text-[#292441] md:px-12"
+      className="font-body min-h-screen px-6 py-8 font-bold text-[#292441] md:px-12"
       style={paperBackgroundStyle}
     >
       <div className="mx-auto max-w-[1280px]">
@@ -35,7 +36,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
         <div className="mt-4 border-t-4 border-[#292441] pt-10">
           <Link
             href="/#projects"
-            className="font-heading inline-block rounded-md bg-[#CA5521] px-4 py-2 text-sm uppercase tracking-[0.08em] text-[#E9E7DA] transition hover:opacity-90"
+            className="font-heading inline-block rounded-md bg-[#CA5521] px-3 py-1.5 text-xs uppercase tracking-[0.08em] text-[#E9E7DA] transition hover:opacity-90"
           >
             Back to projects
           </Link>
@@ -45,6 +46,17 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
               <p className="text-[10px] uppercase tracking-[0.18em] text-[#CA5521]">
                 No.{project.number}
               </p>
+              {project.headerLogo ? (
+                <div className="relative mt-3 h-[56px] w-[280px] md:h-[72px] md:w-[360px]">
+                  <Image
+                    src={project.headerLogo}
+                    alt={`${project.title} logo`}
+                    fill
+                    sizes="(min-width: 768px) 360px, 280px"
+                    className="object-contain object-left"
+                  />
+                </div>
+              ) : null}
               <h1 className="font-heading mt-2 text-6xl uppercase leading-[0.9] md:text-8xl">
                 {project.title}
               </h1>
@@ -95,6 +107,68 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
               />
             ) : null}
 
+            {section.figmaEmbedUrl ? (
+              <div className="mt-8">
+                <h4 className="font-heading text-2xl uppercase text-[#292441] md:text-3xl">
+                  Interactieve Figma
+                </h4>
+                <div className="mt-4 overflow-hidden border-2 border-[#292441]/30 bg-[#E9E7DA]/40">
+                  <iframe
+                    title={`${project.title} Figma prototype`}
+                    src={section.figmaEmbedUrl}
+                    className="h-[460px] w-full md:h-[620px]"
+                    allowFullScreen
+                  />
+                </div>
+                {section.figmaFileUrl ? (
+                  <Link
+                    href={section.figmaFileUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-block text-sm uppercase tracking-[0.08em] text-[#292441] underline underline-offset-4 hover:opacity-70"
+                  >
+                    Open in Figma
+                  </Link>
+                ) : null}
+              </div>
+            ) : null}
+
+            {section.afterFigma ? (
+              <p className="mt-8 max-w-[900px] text-lg leading-relaxed md:text-xl">
+                {section.afterFigma}
+              </p>
+            ) : null}
+
+            {section.logoScrollShowcase ? (
+              <LogoScrollShowcase config={section.logoScrollShowcase} />
+            ) : null}
+
+            {section.websiteEmbedUrl ? (
+              <div className="mt-8">
+                <h4 className="font-heading text-2xl uppercase text-[#292441] md:text-3xl">
+                  Live website
+                </h4>
+                <div className="mt-4 overflow-hidden border-2 border-[#292441]/30 bg-[#E9E7DA]/40">
+                  <iframe
+                    title={`${project.title} website preview`}
+                    src={section.websiteEmbedUrl}
+                    className="h-[520px] w-full md:h-[680px]"
+                    allowFullScreen
+                  />
+                </div>
+                {section.websiteUrl ? (
+                  <Link
+                    href={section.websiteUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-block text-sm uppercase tracking-[0.08em] text-[#292441] underline underline-offset-4 hover:opacity-70"
+                  >
+                    Open website in nieuw tabblad
+                  </Link>
+                ) : null}
+              </div>
+            ) : null}
+
             {section.images && section.images.length > 0 ? (
               <div className="mt-8 grid gap-6 sm:grid-cols-2">
                 {section.images.map((src) => (
@@ -119,7 +193,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
         <div className="pb-20 pt-16">
           <Link
             href="/#projects"
-            className="font-heading inline-block rounded-xl bg-[#292541] px-10 py-4 text-2xl uppercase tracking-[0.08em] text-[#E9E7DA] transition hover:opacity-90 md:px-14 md:text-3xl"
+            className="font-heading inline-block rounded-xl bg-[#292541] px-8 py-3 text-xl uppercase tracking-[0.08em] text-[#E9E7DA] transition hover:opacity-90 md:px-10 md:text-2xl"
           >
             Alle projects
           </Link>

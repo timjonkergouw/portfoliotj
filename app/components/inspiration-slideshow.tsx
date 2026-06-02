@@ -483,7 +483,7 @@ export default function InspirationSlideshow({
                     sizes="340px"
                     draggable={false}
                     unoptimized={slide.src.endsWith(".gif")}
-                    className="pointer-events-none object-cover"
+                    className={`pointer-events-none ${slide.thumbClassName ?? "object-cover"}`}
                   />
                 </div>
               </div>
@@ -520,7 +520,7 @@ export default function InspirationSlideshow({
               alt={expanded.slide.alt ?? ""}
               fill
               sizes="(min-width: 768px) 640px, 90vw"
-              className="object-contain p-2"
+              className={expanded.slide.modalClassName ?? "object-contain p-2"}
               priority
               unoptimized={expanded.slide.src.endsWith(".gif")}
             />
@@ -540,7 +540,7 @@ export default function InspirationSlideshow({
           <button
             type="button"
             onClick={beginClose}
-            className={`font-heading fixed z-[52] rounded-md bg-[#CA5521] px-4 py-1.5 text-xs uppercase tracking-[0.1em] text-[#E9E7DA] transition-all duration-500 hover:opacity-90 ${
+            className={`font-heading fixed z-[52] rounded-md bg-[#CA5521] px-3 py-1 text-[11px] uppercase tracking-[0.1em] text-[#E9E7DA] transition-all duration-500 hover:opacity-90 ${
               expanded.phase === "open"
                 ? "opacity-100"
                 : "pointer-events-none opacity-0"
