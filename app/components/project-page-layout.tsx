@@ -98,9 +98,56 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
             className={`${index === 0 ? "mt-14" : "mt-16"} border-t-4 border-[#292441] pt-10 md:pt-12`}
           >
             <SectionHeading title={section.title} />
-            <p className="mt-4 max-w-[900px] text-base leading-relaxed sm:mt-6 sm:text-lg md:text-xl">
-              {section.description}
-            </p>
+            {section.websiteEmbedUrl &&
+            section.websiteEmbedLayout === "mobile-side" ? (
+              <div className="mt-4 flex flex-col gap-8 sm:mt-6">
+                <div className="max-w-[900px] space-y-4 text-base leading-relaxed sm:text-lg md:text-xl">
+                  {section.description.split("\n\n").map((paragraph) => (
+                    <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                  ))}
+                </div>
+                <div className="mx-auto w-full max-w-[390px]">
+                  <div className="overflow-hidden rounded-[2rem] border-4 border-[#292441] bg-[#E9E7DA]/40 shadow-[0_12px_40px_rgba(41,36,65,0.12)]">
+                    <div
+                      className="mx-auto flex justify-center overflow-hidden"
+                      style={{ width: "390px", height: "760px" }}
+                    >
+                      <div
+                        className="overflow-hidden"
+                        style={{ width: "351px", height: "760px" }}
+                      >
+                        <iframe
+                          title={`${project.title} mobile preview`}
+                          src={section.websiteEmbedUrl}
+                          className="block border-0 bg-white"
+                          style={{
+                            width: "390px",
+                            height: "844px",
+                            transform: "scale(0.9)",
+                            transformOrigin: "top left",
+                          }}
+                          allowFullScreen
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {section.websiteUrl ? (
+                    <Link
+                      href={section.websiteUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-4 block text-center text-sm uppercase tracking-[0.08em] text-[#292441] underline underline-offset-4 hover:opacity-70"
+                    >
+                      Bekijk op Vercel
+                    </Link>
+                  ) : null}
+                </div>
+              </div>
+            ) : (
+              <p className="mt-4 max-w-[900px] text-base leading-relaxed sm:mt-6 sm:text-lg md:text-xl">
+                {section.description}
+              </p>
+            )}
 
             {section.flipInspirationCards &&
             section.flipInspirationCards.length > 0 ? (
@@ -161,7 +208,8 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
               <LogoScrollShowcase config={section.logoScrollShowcase} />
             ) : null}
 
-            {section.websiteEmbedUrl ? (
+            {section.websiteEmbedUrl &&
+            section.websiteEmbedLayout !== "mobile-side" ? (
               <div className="mt-8">
                 <h4 className="font-heading text-xl uppercase text-[#292441] md:text-2xl">
                   Live website

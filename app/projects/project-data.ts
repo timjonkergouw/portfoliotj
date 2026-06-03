@@ -60,6 +60,7 @@ type ProjectSection = {
   afterFigma?: string;
   websiteEmbedUrl?: string;
   websiteUrl?: string;
+  websiteEmbedLayout?: "full" | "mobile-side";
   logoScrollShowcase?: LogoScrollShowcaseConfig;
   inspirationSlides?: InspirationSlide[];
   secondarySlides?: InspirationSlide[];
@@ -393,7 +394,10 @@ const projects: Record<string, Project> = {
         id: "develop",
         title: "Ontwikkeling",
         description:
-          "Tijdens develop is het concept vertaald naar een digitale ervaring met een overzichtelijke structuur, responsive opbouw en een interface die de club en activiteiten helder presenteert.",
+          "Hierna ben ik begonnen met het omzetten van het design naar code. Dit heb ik gedaan in Cursor, waarbij ik gebruik heb gemaakt van Next.js en React.\n\nDaarnaast heb ik Supabase gekoppeld als database voor de webapp. Het probleem is alleen dat de gratis versie van Supabase automatisch wordt gedeactiveerd als je het twee weken niet gebruikt. Omdat ik geen betaalde versie heb en niet meer actief aan dit project werk, is er een grote kans dat de app niet meer goed werkt, bijvoorbeeld wanneer je een nieuwe speler probeert aan te maken.",
+        websiteEmbedUrl: "https://dartclub.vercel.app/",
+        websiteUrl: "https://dartclub.vercel.app/",
+        websiteEmbedLayout: "mobile-side",
       },
     ],
   },
