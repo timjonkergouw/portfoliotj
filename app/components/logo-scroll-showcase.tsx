@@ -57,8 +57,10 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
   const isDartclubShowcase = config.frames.some((frame) =>
     frame.src.includes("/dartclub/"),
   );
+  const dualColumnScroll =
+    config.dualColumnScroll ?? isDartclubShowcase;
   const textBeforeImage =
-    config.textBeforeImage ?? isDartclubShowcase;
+    config.textBeforeImage ?? (isDartclubShowcase && !dualColumnScroll);
   const imagesFillHeight =
     config.imagesFillHeight ?? isDartclubShowcase;
   const compactScroll = config.compactScroll ?? isDartclubShowcase;
@@ -79,6 +81,9 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
 
   const activeFlowItem = flowItems[activeFlowIndex] ?? flowItems[0];
   const nextFlowItem = flowItems[nextFlowIndex] ?? activeFlowItem;
+
+  const dualColumnStep =
+    frameCount > 1 ? progress * (frameCount - 1) : 0;
 
   const solidBackground =
     config.solidBackground ??
@@ -120,7 +125,7 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
       };
   const slidePanelClass = useSolidBackground ? "bg-[#EEEEEE]" : "";
   const noteClassName = useSolidBackground
-    ? "max-w-[760px] px-6 text-center text-base font-bold leading-relaxed md:px-10 md:text-2xl"
+    ? "max-w-[760px] px-4 text-center text-sm font-bold leading-relaxed sm:px-6 sm:text-base md:px-8 md:text-xl lg:text-2xl"
     : "";
   const imageClassName = imagesFillHeight
     ? "object-contain object-top"
@@ -134,47 +139,53 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
       ? `relative h-full w-full ${slidePanelClass}`
       : `relative h-full w-full max-w-[760px] ${slidePanelClass}`;
 
+  const renderTextSlide = (frameIndex: number) => (
+    <div
+      className={`flex h-full w-full flex-col items-center justify-center gap-4 px-4 sm:gap-5 sm:px-6 md:gap-6 md:px-8 ${slidePanelClass}`}
+    >
+      {config.textStepLogo ? (
+        <div className="relative h-20 w-[280px] shrink-0 sm:h-24 sm:w-[340px] md:h-28 md:w-[400px] lg:h-32 lg:w-[480px]">
+          <Image
+            src={config.textStepLogo}
+            alt={config.textStepLogoAlt ?? ""}
+            fill
+            sizes="480px"
+            className="object-contain object-center"
+          />
+        </div>
+      ) : null}
+      <p
+        className={
+          useSolidBackground
+            ? noteClassName
+            : `max-w-[760px] text-center text-base leading-relaxed md:text-2xl ${getNoteTextClass(config.frames[frameIndex].src)}`
+        }
+        style={textColor ? { color: textColor } : undefined}
+      >
+        {config.frames[frameIndex].note ?? ""}
+      </p>
+    </div>
+  );
+
+  const renderImageSlide = (frameIndex: number) => (
+    <div className={`relative h-full w-full ${slidePanelClass}`}>
+      <Image
+        src={config.frames[frameIndex].src}
+        alt={config.frames[frameIndex].alt}
+        fill
+        sizes="(min-width: 768px) 50vw, 100vw"
+        className={imageClassName}
+        priority={compactScroll || frameIndex < 2}
+      />
+    </div>
+  );
+
   const renderFlowItem = (item: (typeof flowItems)[number]) => {
     if (item.type === "image") {
-      return (
-        <Image
-          src={config.frames[item.frameIndex].src}
-          alt={config.frames[item.frameIndex].alt}
-          fill
-          sizes="100vw"
-          className={imageClassName}
-          priority={compactScroll || item.frameIndex < 2}
-        />
-      );
+      return renderImageSlide(item.frameIndex);
     }
 
-    return (
-      <div
-        className={`flex h-full w-full flex-col items-center justify-center gap-6 px-6 md:gap-8 md:px-10 ${slidePanelClass}`}
-      >
-        {config.textStepLogo ? (
-          <div className="relative h-28 w-[400px] shrink-0 md:h-32 md:w-[480px]">
-            <Image
-              src={config.textStepLogo}
-              alt={config.textStepLogoAlt ?? ""}
-              fill
-              sizes="480px"
-              className="object-contain object-center"
-            />
-          </div>
-        ) : null}
-        <p
-          className={
-            useSolidBackground
-              ? noteClassName
-              : `max-w-[760px] text-center text-base leading-relaxed md:text-2xl ${getNoteTextClass(config.frames[item.frameIndex].src)}`
-          }
-          style={textColor ? { color: textColor } : undefined}
-        >
-          {config.frames[item.frameIndex].note ?? ""}
-        </p>
-      </div>
-    );
+    return renderTextSlide(item.frameIndex);
   };
 
   useEffect(() => {
@@ -245,6 +256,99 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
 
   const pinScrollVh = resolvePinScrollVh(config);
 
+  const renderDualColumnShowcase = () => {
+    const step = reduceMotion ? 0 : dualColumnStep;
+    const stepSpacing = 120;
+
+    return (
+      <div className="relative h-full w-full overflow-hidden">
+        {config.frames.map((frame, index) => (
+          <div
+            key={`dual-text-${frame.src}`}
+            className={`absolute left-0 top-0 h-full w-1/2 will-change-transform ${slidePanelClass}`}
+            style={{
+              transform: `translate3d(0, ${(index - step) * stepSpacing}%, 0)`,
+            }}
+          >
+            <div className="flex h-full items-center justify-center px-4 py-12 sm:px-6 sm:py-14 md:px-10 md:py-16 lg:pr-12">
+              {renderTextSlide(index)}
+            </div>
+          </div>
+        ))}
+
+        {config.frames.map((frame, index) => (
+          <div
+            key={`dual-image-${frame.src}`}
+            className={`absolute right-0 top-0 h-full w-1/2 will-change-transform ${slidePanelClass}`}
+            style={{
+              transform: `translate3d(0, ${(step - index) * stepSpacing}%, 0)`,
+            }}
+          >
+            <div className="flex h-full items-center justify-center px-3 py-12 sm:px-4 sm:py-14 md:px-6 md:py-16 lg:pl-12">
+              <div className="relative h-full w-full max-h-[min(88vh,920px)] max-w-[min(98%,520px)]">
+                {renderImageSlide(index)}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderSequentialShowcase = () => (
+    <>
+      {reduceMotion ? (
+        textBeforeImage ? (
+          <div
+            className={`absolute inset-0 flex items-center justify-center px-6 py-14 md:px-12 ${slidePanelClass}`}
+          >
+            {renderFlowItem({ type: "text", frameIndex: 0 })}
+          </div>
+        ) : (
+          <div
+            className={
+              imagesFillHeight
+                ? `relative h-full w-full ${slidePanelClass}`
+                : "relative mx-auto h-full w-full max-w-[720px]"
+            }
+          >
+            {renderFlowItem({ type: "image", frameIndex: 0 })}
+          </div>
+        )
+      ) : (
+        <>
+          <div
+            className={getSlideLayerClass(activeFlowItem.type)}
+            style={{
+              transform: `translate3d(${-easedProgress * slideOffsetPercent}%, 0, 0)`,
+              opacity: compactScroll
+                ? 1
+                : clamp(1 - easedProgress * 0.18, 0, 1),
+            }}
+          >
+            <div className={getMediaFrameClass(activeFlowItem.type)}>
+              {renderFlowItem(activeFlowItem)}
+            </div>
+          </div>
+
+          {nextFlowIndex !== activeFlowIndex ? (
+            <div
+              className={getSlideLayerClass(nextFlowItem.type)}
+              style={{
+                transform: `translate3d(${(1 - easedProgress) * slideOffsetPercent}%, 0, 0)`,
+                opacity: compactScroll ? 1 : clamp((easedProgress - 0.02) / 0.98, 0, 1),
+              }}
+            >
+              <div className={getMediaFrameClass(nextFlowItem.type)}>
+                {renderFlowItem(nextFlowItem)}
+              </div>
+            </div>
+          ) : null}
+        </>
+      )}
+    </>
+  );
+
   return (
     <section
       ref={sectionRef}
@@ -264,59 +368,13 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
           />
 
           <div className="absolute inset-0">
-          {reduceMotion ? (
-            textBeforeImage ? (
-              <div
-                className={`absolute inset-0 flex items-center justify-center px-6 py-14 md:px-12 ${slidePanelClass}`}
-              >
-                {renderFlowItem({ type: "text", frameIndex: 0 })}
-              </div>
-            ) : (
-              <div
-                className={
-                  imagesFillHeight
-                    ? `relative h-full w-full ${slidePanelClass}`
-                    : "relative mx-auto h-full w-full max-w-[720px]"
-                }
-              >
-                {renderFlowItem({ type: "image", frameIndex: 0 })}
-              </div>
-            )
-          ) : (
-            <>
-              <div
-                className={getSlideLayerClass(activeFlowItem.type)}
-                style={{
-                  transform: `translate3d(${-easedProgress * slideOffsetPercent}%, 0, 0)`,
-                  opacity: compactScroll
-                    ? 1
-                    : clamp(1 - easedProgress * 0.18, 0, 1),
-                }}
-              >
-                <div className={getMediaFrameClass(activeFlowItem.type)}>
-                  {renderFlowItem(activeFlowItem)}
-                </div>
-              </div>
-
-              {nextFlowIndex !== activeFlowIndex ? (
-                <div
-                  className={getSlideLayerClass(nextFlowItem.type)}
-                  style={{
-                    transform: `translate3d(${(1 - easedProgress) * slideOffsetPercent}%, 0, 0)`,
-                    opacity: compactScroll ? 1 : clamp((easedProgress - 0.02) / 0.98, 0, 1),
-                  }}
-                >
-                  <div className={getMediaFrameClass(nextFlowItem.type)}>
-                    {renderFlowItem(nextFlowItem)}
-                  </div>
-                </div>
-              ) : null}
-            </>
-          )}
+            {dualColumnScroll
+              ? renderDualColumnShowcase()
+              : renderSequentialShowcase()}
           </div>
 
           {!reduceMotion ? (
-            <div className="absolute bottom-6 left-1/2 w-[220px] -translate-x-1/2">
+            <div className="absolute bottom-6 left-1/2 z-20 w-[220px] -translate-x-1/2">
               <div
                 className="h-1.5 w-full overflow-hidden rounded-full"
                 style={{

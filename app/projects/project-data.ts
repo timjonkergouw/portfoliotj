@@ -42,6 +42,8 @@ export type LogoScrollShowcaseConfig = {
   textBeforeImage?: boolean;
   imagesFillHeight?: boolean;
   compactScroll?: boolean;
+  /** Side-by-side text/image columns with opposite scroll directions. */
+  dualColumnScroll?: boolean;
   /** Total pinned scroll length in viewport heights (higher = slower). */
   pinScrollVh?: number;
   textStepLogo?: string;
@@ -320,10 +322,12 @@ const projects: Record<string, Project> = {
               "Dit is de app van de legendarische darts caller Russ Bray. De app is vrij simpel en vooral bijzonder omdat de caller je score hardop uitspreekt wanneer je deze invoert. Ook hier zie je weer het toetsenbord onderaan en de score bovenin het scherm, wat zorgt voor een duidelijke en herkenbare structuur.",
           },
         ],
+        afterInspiration:
+          "Om deze designs te realiseren, ben ik in Figma begonnen met het ontwerpen van een groot deel van de pagina's. Op deze manier kon ik vooraf een strakke en functionele uitstraling neerzetten en een duidelijk beeld krijgen van hoe de app eruit zou komen te zien.",
         logoScrollShowcase: {
           pinScrollVh: 1400,
           solidBackground: "#EEEEEE",
-          textBeforeImage: true,
+          dualColumnScroll: true,
           imagesFillHeight: true,
           compactScroll: true,
           theme: {
