@@ -8,15 +8,7 @@ const projectCards = getHomeProjectCards();
 
 export default function Home() {
   return (
-    <div
-      className="font-body text-[#E9E7DA]"
-      style={{
-        backgroundImage: "url('/paperlayout.png')",
-        backgroundRepeat: "repeat-y",
-        backgroundSize: "100% auto",
-        backgroundPosition: "top center",
-      }}
-    >
+    <div className="font-body text-[#E9E7DA]">
       <DesktopExperienceNotice />
       <HomeHero />
 

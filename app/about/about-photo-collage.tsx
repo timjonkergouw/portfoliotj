@@ -38,7 +38,7 @@ export default function AboutPhotoCollage() {
           <div
             className="absolute bottom-0 left-0 h-4 w-full"
             style={{
-              backgroundImage: "url('/paperlayout.png')",
+              backgroundImage: "url('/portfolio.svg')",
               backgroundRepeat: "repeat-x",
               backgroundSize: "auto 100%",
               backgroundPosition: "center",

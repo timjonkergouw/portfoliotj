@@ -1,4 +1,4 @@
-type ProjectSectionId = "idea" | "design" | "develop";
+type ProjectSectionId = "idea" | "design" | "develop" | "opdracht";
 
 export type InspirationSlide = {
   src: string;
@@ -407,26 +407,27 @@ const projects: Record<string, Project> = {
     image: "/ql oud.png",
     homeCardImage: "/ql oud.png",
     homeCardClass: homeProjectCardClasses["quality-lodgings"],
+    headerLogo: "/ql/ql.svg",
+    headerLogoClassName:
+      "h-[140px] max-w-[640px] md:h-[200px] md:max-w-[900px]",
+    headerLogoSizes: "(min-width: 768px) 900px, 640px",
     intro:
-      "Een hospitality-project waarin merkbeleving, interface-design en technische uitwerking samenkomen voor een premium lodging-ervaring.",
+      "Een hospitality-project waarin opdracht en design samenkomen voor een premium lodging-ervaring.",
     sections: [
       {
-        id: "idea",
-        title: "Idee",
+        id: "opdracht",
+        title: "Opdracht",
         description:
-          "Het uitgangspunt was een premium maar toegankelijke merkervaring voor accommodaties. Het concept richt zich op vertrouwen, comfort en een duidelijke beleving van kwaliteit voor gasten.",
+          "In semester 2 kregen we de opdracht om voor Quality Lodgings een onderzoek te doen naar de gebruiksvriendelijkheid van hun website. Quality Lodgings is een bedrijf dat samenwerkt met luxe hotels in binnen- en buitenland en kamers voor deze hotels aanbiedt.\n\nDe website heeft een chique uitstraling en is mooi vormgegeven. Onze opdracht was om te analyseren wat er op het gebied van User Interface (UI) en User Experience (UX) verbeterd kon worden.\n\nVoor deze opdracht hadden we ongeveer drie tot vier weken de tijd. Daarom lag de focus volledig op het ontwerpen van verbeteringen en hoefden we niets te ontwikkelen. Zelf heb ik mij vooral gericht op de pagina \"Verras mij\", die hieronder wordt weergegeven.\n\nLet op: Quality Lodgings heeft hun website inmiddels wit gemaakt. In de sectie Design laat ik images zien van hoe de website er toen uitzag tijdens mijn onderzoek.",
+        websiteEmbedUrl:
+          "https://qualitylodgings.com/nl/discover-your-taste",
+        websiteUrl: "https://qualitylodgings.com/nl/discover-your-taste",
       },
       {
         id: "design",
-        title: "Ontwerp",
+        title: "Design",
         description:
           "De visuele richting benadrukt rust, elegantie en helderheid. Typografie, beeldtaal en layout zijn ontworpen om informatie over verblijven overzichtelijk en aantrekkelijk te presenteren.",
-      },
-      {
-        id: "develop",
-        title: "Ontwikkeling",
-        description:
-          "In develop is het ontwerp omgezet naar een functionele webervaring met focus op navigatie, responsive gedrag en een heldere customer journey van oriëntatie tot contact.",
       },
     ],
   },

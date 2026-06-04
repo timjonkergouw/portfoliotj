@@ -3,19 +3,9 @@ import { AboutServices, AboutSkills } from "@/app/about/about-interactive";
 import AboutPhotoCollage from "@/app/about/about-photo-collage";
 import { careerTimeline } from "@/app/about/about-data";
 
-const paperBackgroundStyle = {
-  backgroundImage: "url('/paperlayout.png')",
-  backgroundRepeat: "repeat-y",
-  backgroundSize: "100% auto",
-  backgroundPosition: "top center",
-} as const;
-
 export default function AboutPage() {
   return (
-    <main
-      className="font-body site-page min-h-screen text-[#292441]"
-      style={paperBackgroundStyle}
-    >
+    <main className="font-body site-page min-h-screen text-[#292441]">
       <div className="site-shell">
         <SiteHeader />
 

@@ -14,13 +14,6 @@ const LogoScrollShowcase = dynamic(
   () => import("@/app/components/logo-scroll-showcase"),
 );
 
-const paperBackgroundStyle = {
-  backgroundImage: "url('/paperlayout.png')",
-  backgroundRepeat: "repeat-y",
-  backgroundSize: "100% auto",
-  backgroundPosition: "top center",
-} as const;
-
 function SectionHeading({ title }: { title: string }) {
   return <h2 className="site-section-heading">{title}</h2>;
 }
@@ -31,10 +24,7 @@ type ProjectPageLayoutProps = {
 
 export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
   return (
-    <main
-      className="font-body site-page min-h-screen font-bold text-[#292441]"
-      style={paperBackgroundStyle}
-    >
+    <main className="font-body site-page min-h-screen font-bold text-[#292441]">
       <div className="site-shell">
         <SiteHeader />
 
@@ -144,9 +134,11 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
                 </div>
               </div>
             ) : (
-              <p className="mt-4 max-w-[900px] text-base leading-relaxed sm:mt-6 sm:text-lg md:text-xl">
-                {section.description}
-              </p>
+              <div className="mt-4 max-w-[900px] space-y-4 text-base leading-relaxed sm:mt-6 sm:text-lg md:text-xl">
+                {section.description.split("\n\n").map((paragraph) => (
+                  <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                ))}
+              </div>
             )}
 
             {section.flipInspirationCards &&

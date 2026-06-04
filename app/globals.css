@@ -26,7 +26,11 @@ body {
 }
 
 body {
-  background: var(--background);
+  background-color: #e9e7da;
+  background-image: url("/portfolio.svg");
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-position: top center;
   color: var(--foreground);
   font-family: var(--font-alte-haas-regular), Arial, Helvetica, sans-serif;
 }

@@ -77,15 +77,7 @@ export default function HomeHero() {
   }, [incomingFigure, isFigureAnimating]);
 
   return (
-    <section
-      className="relative min-h-[100svh] overflow-hidden rounded-b-[32px] sm:rounded-b-[48px] md:rounded-b-[56px]"
-      style={{
-        backgroundImage: "url('/paperlayout.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "top",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <section className="relative min-h-[100svh] overflow-hidden rounded-b-[32px] sm:rounded-b-[48px] md:rounded-b-[56px]">
       <div
         className="absolute inset-0 z-0"
         style={{
