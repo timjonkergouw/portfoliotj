@@ -42,9 +42,10 @@ export type LogoScrollShowcaseConfig = {
   textBeforeImage?: boolean;
   imagesFillHeight?: boolean;
   compactScroll?: boolean;
-  /** Side-by-side text/image columns with opposite scroll directions. */
   dualColumnScroll?: boolean;
-  /** Total pinned scroll length in viewport heights (higher = slower). */
+  clickToAdvance?: boolean;
+  clickAdvanceDurationMs?: number;
+  scrollAdvanceCooldownMs?: number;
   pinScrollVh?: number;
   textStepLogo?: string;
   textStepLogoAlt?: string;
@@ -61,6 +62,8 @@ type ProjectSection = {
   websiteEmbedUrl?: string;
   websiteUrl?: string;
   websiteEmbedLayout?: "full" | "mobile-side";
+  sectionLogo?: string;
+  sectionLogoAlt?: string;
   logoScrollShowcase?: LogoScrollShowcaseConfig;
   inspirationSlides?: InspirationSlide[];
   secondarySlides?: InspirationSlide[];
@@ -71,34 +74,17 @@ export type Project = {
   number: string;
   title: string;
   image: string;
-  homeCardImage: string;
-  homeCardClass: string;
-  headerLogo?: string;
   headerLogoClassName?: string;
   headerLogoSizes?: string;
   intro: string;
   sections: ProjectSection[];
 };
 
-const homeProjectCardClasses = {
-  fioresque:
-    "w-full max-w-[520px] justify-self-center md:absolute md:left-[2%] md:top-[4%] md:max-w-none md:w-[min(42vw,440px)] lg:w-[min(38vw,500px)]",
-  dartclub:
-    "w-full max-w-[390px] justify-self-center md:absolute md:right-[4%] md:top-[7%] md:max-w-none md:w-[min(32vw,320px)] lg:w-[min(28vw,360px)]",
-  "quality-lodgings":
-    "w-full max-w-[500px] justify-self-center md:absolute md:left-1/2 md:top-[34%] md:max-w-none md:w-[min(40vw,410px)] md:-translate-x-1/2 lg:w-[min(36vw,460px)]",
-  rosh: "w-full max-w-[330px] justify-self-center md:absolute md:right-[5%] md:top-[64%] md:max-w-none md:w-[min(28vw,280px)] lg:w-[min(26vw,310px)]",
-  vara: "w-full max-w-[560px] justify-self-center md:absolute md:left-[2%] md:top-[67%] md:max-w-none md:w-[min(44vw,460px)] lg:w-[min(40vw,520px)]",
-} as const;
-
 const projects: Record<string, Project> = {
   fioresque: {
     number: "1",
     title: "Fioresque",
-    image: "/fioresque/fioresque.gif",
-    homeCardImage: "/fioresque oud.png",
-    homeCardClass: homeProjectCardClasses.fioresque,
-    headerLogo: "/fioresque/fioresque logo zwart tekst wit.png",
+    image: "/logoprojects/fioresque.svg",
     intro:
       "Een fictief fashionmerk-project waarin concept, visuele identiteit en digitale uitwerking samenkomen in drie fases: idea, design en develop.",
     sections: [
@@ -279,10 +265,7 @@ const projects: Record<string, Project> = {
   dartclub: {
     number: "2",
     title: "Dartclub",
-    image: "/dartcub oud.png",
-    homeCardImage: "/dartcub oud.png",
-    homeCardClass: homeProjectCardClasses.dartclub,
-    headerLogo: "/dartclub/dartclub.svg",
+    image: "/logoprojects/dartclub.svg",
     headerLogoClassName:
       "h-[200px] max-w-[800px] md:h-[300px] md:max-w-[1100px]",
     headerLogoSizes: "(min-width: 768px) 1100px, 800px",
@@ -326,9 +309,10 @@ const projects: Record<string, Project> = {
         afterInspiration:
           "Om deze designs te realiseren, ben ik in Figma begonnen met het ontwerpen van een groot deel van de pagina's. Op deze manier kon ik vooraf een strakke en functionele uitstraling neerzetten en een duidelijk beeld krijgen van hoe de app eruit zou komen te zien.",
         logoScrollShowcase: {
-          pinScrollVh: 1400,
           solidBackground: "#EEEEEE",
           dualColumnScroll: true,
+          clickToAdvance: true,
+          clickAdvanceDurationMs: 900,
           imagesFillHeight: true,
           compactScroll: true,
           theme: {
@@ -336,7 +320,7 @@ const projects: Record<string, Project> = {
             progress: "#0A294F",
             progressTrack: "rgba(10, 41, 79, 0.2)",
           },
-          textStepLogo: "/dartclub/dartclub.svg",
+          textStepLogo: "/logoprojects/dartclub.svg",
           textStepLogoAlt: "Dartclub",
           frames: [
             {
@@ -394,20 +378,19 @@ const projects: Record<string, Project> = {
         id: "develop",
         title: "Ontwikkeling",
         description:
-          "Hierna ben ik begonnen met het omzetten van het design naar code. Dit heb ik gedaan in Cursor, waarbij ik gebruik heb gemaakt van Next.js en React.\n\nDaarnaast heb ik Supabase gekoppeld als database voor de webapp. Het probleem is alleen dat de gratis versie van Supabase automatisch wordt gedeactiveerd als je het twee weken niet gebruikt. Omdat ik geen betaalde versie heb en niet meer actief aan dit project werk, is er een grote kans dat de app niet meer goed werkt, bijvoorbeeld wanneer je een nieuwe speler probeert aan te maken.",
+          "Hierna ben ik begonnen met het omzetten van het design naar code. Dit heb ik gedaan in Cursor, waarbij ik gebruik heb gemaakt van Next.js en React.\n\nDaarnaast heb ik Supabase gekoppeld als database voor de webapp. Het probleem is alleen dat de gratis versie van Supabase automatisch wordt gedeactiveerd als je het twee weken niet gebruikt. Omdat ik geen betaalde versie heb en niet meer actief aan dit project werk, is er een grote kans dat de app niet meer goed werkt, bijvoorbeeld wanneer je een nieuwe speler probeert aan te maken.\n\nOok kan het zijn dat ik de app heb aangepast en dat er nu nog maar twee standaard karakters zichtbaar zijn, genaamd Tim en Jeroen. Dit is puur bedoeld zodat mensen de website kunnen bekijken en zien hoe het werkt. Voel je dus vrij om een kijkje te nemen en een potje te starten.",
         websiteEmbedUrl: "https://dartclub.vercel.app/",
         websiteUrl: "https://dartclub.vercel.app/",
         websiteEmbedLayout: "mobile-side",
+        sectionLogo: "/logoprojects/dartclub.svg",
+        sectionLogoAlt: "Dartclub",
       },
     ],
   },
   "quality-lodgings": {
     number: "3",
     title: "Quality Lodgings",
-    image: "/ql oud.png",
-    homeCardImage: "/ql oud.png",
-    homeCardClass: homeProjectCardClasses["quality-lodgings"],
-    headerLogo: "/ql/ql.svg",
+    image: "/logoprojects/ql.svg",
     headerLogoClassName:
       "h-[140px] max-w-[640px] md:h-[200px] md:max-w-[900px]",
     headerLogoSizes: "(min-width: 768px) 900px, 640px",
@@ -434,9 +417,7 @@ const projects: Record<string, Project> = {
   rosh: {
     number: "4",
     title: "ROSH",
-    image: "/rosh oud.png",
-    homeCardImage: "/rosh oud.png",
-    homeCardClass: homeProjectCardClasses.rosh,
+    image: "/logoprojects/rosh.svg",
     intro:
       "Een merkgericht project waarin strategie, design en development samen een complete digitale identiteit vormen.",
     sections: [
@@ -463,9 +444,7 @@ const projects: Record<string, Project> = {
   vara: {
     number: "5",
     title: "VARA",
-    image: "/vara oud.png",
-    homeCardImage: "/vara oud.png",
-    homeCardClass: homeProjectCardClasses.vara,
+    image: "/logoprojects/vara.svg",
     intro:
       "Een media-gericht project waarin conceptontwikkeling, visueel ontwerp en technische realisatie in drie stappen zijn doorlopen.",
     sections: [
@@ -503,9 +482,9 @@ export function getHomeProjectCards() {
     return {
       id: project.number,
       name: project.title,
-      image: project.homeCardImage,
+      summary: project.intro,
+      image: project.image,
       href: `/projects/${slug}`,
-      cardClass: project.homeCardClass,
     };
   });
 }

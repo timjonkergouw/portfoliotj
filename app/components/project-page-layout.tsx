@@ -36,47 +36,35 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
             Terug naar projecten
           </Link>
 
-          <div className="mt-6 grid gap-6 sm:mt-8 sm:gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+          <div className="mt-6 sm:mt-8">
             <div>
               <p className="text-[10px] uppercase tracking-[0.18em] text-[#CA5521]">
                 No.{project.number}
               </p>
-              {project.headerLogo ? (
-                <div
-                  className={`relative mt-3 w-full ${
-                    project.headerLogoClassName ??
-                    "h-[140px] max-w-[640px] md:h-[200px] md:max-w-[900px]"
-                  }`}
-                >
-                  <Image
-                    src={project.headerLogo}
-                    alt={`${project.title} logo`}
-                    fill
-                    sizes={
-                      project.headerLogoSizes ??
-                      "(min-width: 768px) 900px, 640px"
-                    }
-                    className="object-contain object-left"
-                  />
-                </div>
-              ) : null}
+              <div
+                className={`relative mt-3 w-full ${
+                  project.headerLogoClassName ??
+                  "h-[140px] max-w-[640px] md:h-[200px] md:max-w-[900px]"
+                }`}
+              >
+                <Image
+                  src={project.image}
+                  alt={`${project.title} logo`}
+                  fill
+                  sizes={
+                    project.headerLogoSizes ??
+                    "(min-width: 768px) 900px, 640px"
+                  }
+                  className="object-contain object-left"
+                  priority
+                />
+              </div>
               <h1 className="font-heading mt-2 text-4xl uppercase leading-[0.9] sm:text-5xl md:text-6xl lg:text-7xl">
                 {project.title}
               </h1>
               <p className="mt-4 max-w-[520px] text-base font-bold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-lg">
                 {project.intro}
               </p>
-            </div>
-            <div className="relative h-[220px] w-full sm:h-[260px] lg:h-[340px]">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                sizes="(min-width: 768px) 55vw, 100vw"
-                className="object-contain object-bottom"
-                priority
-                unoptimized={project.image.endsWith(".gif")}
-              />
             </div>
           </div>
         </div>
@@ -90,13 +78,27 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
             <SectionHeading title={section.title} />
             {section.websiteEmbedUrl &&
             section.websiteEmbedLayout === "mobile-side" ? (
-              <div className="mt-4 flex flex-col gap-8 sm:mt-6">
-                <div className="max-w-[900px] space-y-4 text-base leading-relaxed sm:text-lg md:text-xl">
-                  {section.description.split("\n\n").map((paragraph) => (
-                    <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-                  ))}
+              <div className="mt-4 grid gap-8 sm:mt-6 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-stretch lg:gap-10">
+                <div className="flex flex-col">
+                  <div className="space-y-4 text-base leading-relaxed sm:text-lg md:text-xl">
+                    {section.description.split("\n\n").map((paragraph) => (
+                      <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                    ))}
+                  </div>
+                  {section.sectionLogo ? (
+                    <div className="relative mt-8 h-[160px] w-full max-w-[520px] sm:mt-10 sm:h-[200px] lg:mt-auto lg:h-[min(32vh,280px)] lg:max-w-none">
+                      <Image
+                        src={section.sectionLogo}
+                        alt={section.sectionLogoAlt ?? `${project.title} logo`}
+                        fill
+                        sizes="(min-width: 1024px) 520px, 100vw"
+                        className="object-contain object-left"
+                        loading="lazy"
+                      />
+                    </div>
+                  ) : null}
                 </div>
-                <div className="mx-auto w-full max-w-[390px]">
+                <div className="mx-auto w-full max-w-[390px] lg:mx-0 lg:justify-self-end">
                   <div className="overflow-hidden rounded-[2rem] border-4 border-[#292441] bg-[#E9E7DA]/40 shadow-[0_12px_40px_rgba(41,36,65,0.12)]">
                     <div
                       className="mx-auto flex justify-center overflow-hidden"

@@ -1,5 +1,6 @@
 import SiteHeader from "@/app/components/site-header";
 import { AboutServices, AboutSkills } from "@/app/about/about-interactive";
+import AboutOverMijPhotos from "@/app/about/about-over-mij-photos";
 import AboutPhotoCollage from "@/app/about/about-photo-collage";
 import { careerTimeline } from "@/app/about/about-data";
 
@@ -12,32 +13,35 @@ export default function AboutPage() {
         <AboutPhotoCollage />
 
         <section className="py-10 text-[#1A1633] md:py-14">
-          <div id="over-mij" className="max-w-[920px] scroll-mt-24">
+          <div id="over-mij" className="scroll-mt-24">
             <h2 className="site-section-heading">Over mij</h2>
-            <p className="mt-4 text-lg leading-tight md:text-xl">
-              Hoi, mijn naam is Tim Jonkergouw. Ik ben 20 jaar oud en kom uit
-              &rsquo;s-Hertogenbosch in Nederland. Op dit moment studeer ik ICT, met de
-              richting Media Creation en front-end development.
-              <br />
-              <br />
-              Ik heb veel interesse in creativiteit, vooral in het ontwerpen en bouwen
-              van digitale ervaringen. Wat ik het leukste vind, is het omzetten van
-              ideeën en ontwerpen naar werkende en interactieve websites. Het is voor mij
-              heel tof om te zien hoe iets dat je bedenkt ook echt in de browser tot
-              leven komt.
-              <br />
-              <br />
-              Tijdens mijn studie ben ik steeds bezig met het verbeteren van mijn skills
-              in zowel design als development. Ik leer hoe ik gebruiksvriendelijke en
-              mooie interfaces kan maken. Ik vind het leuk om te experimenteren met
-              verschillende stijlen en technieken en ik ben altijd gemotiveerd om nieuwe
-              dingen te leren en bij te blijven met de laatste ontwikkelingen in web
-              development.
-              <br />
-              <br />
-              In de toekomst wil ik mezelf verder ontwikkelen als front-end developer en
-              bijdragen aan het maken van goede en interessante digitale producten.
-            </p>
+            <div className="mt-4 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(280px,400px)] lg:items-start lg:gap-6 xl:gap-8">
+              <p className="site-section-body text-lg leading-tight md:text-xl">
+                Hoi, mijn naam is Tim Jonkergouw. Ik ben 20 jaar oud en kom uit
+                &rsquo;s-Hertogenbosch in Nederland. Op dit moment studeer ik ICT, met de
+                richting Media Creation en front-end development.
+                <br />
+                <br />
+                Ik heb veel interesse in creativiteit, vooral in het ontwerpen en bouwen
+                van digitale ervaringen. Wat ik het leukste vind, is het omzetten van
+                ideeën en ontwerpen naar werkende en interactieve websites. Het is voor mij
+                heel tof om te zien hoe iets dat je bedenkt ook echt in de browser tot
+                leven komt.
+                <br />
+                <br />
+                Tijdens mijn studie ben ik steeds bezig met het verbeteren van mijn skills
+                in zowel design als development. Ik leer hoe ik gebruiksvriendelijke en
+                mooie interfaces kan maken. Ik vind het leuk om te experimenteren met
+                verschillende stijlen en technieken en ik ben altijd gemotiveerd om nieuwe
+                dingen te leren en bij te blijven met de laatste ontwikkelingen in web
+                development.
+                <br />
+                <br />
+                In de toekomst wil ik mezelf verder ontwikkelen als front-end developer en
+                bijdragen aan het maken van goede en interessante digitale producten.
+              </p>
+              <AboutOverMijPhotos />
+            </div>
           </div>
 
           <AboutServices />
@@ -48,7 +52,7 @@ export default function AboutPage() {
           >
             <h3 className="site-section-heading">School</h3>
 
-            <div className="relative mt-8">
+            <div className="site-section-body relative mt-8">
               <div className="absolute bottom-[-34px] left-[calc(260px+2rem+28px)] top-6 hidden w-[6px] -translate-x-1/2 bg-linear-to-b from-[#292441] via-[#292441] to-transparent md:block" />
 
               <div className="space-y-14 md:space-y-20">

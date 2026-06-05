@@ -22,7 +22,7 @@ export default function SiteHeader() {
       <Link
         href="/"
         aria-label="Ga naar homepagina"
-        className="relative mx-auto block h-[42px] w-[112px] sm:h-[48px] sm:w-[128px] md:h-[68px] md:w-[210px]"
+        className="relative mx-auto block h-[42px] w-[112px] transition-transform duration-300 ease-out hover:scale-[1.06] focus-visible:scale-[1.06] sm:h-[48px] sm:w-[128px] md:h-[68px] md:w-[210px]"
       >
         <Image
           src="/tj logo.png"

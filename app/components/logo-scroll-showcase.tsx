@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { LogoScrollShowcaseConfig } from "@/app/projects/project-data";
 
 type LogoScrollShowcaseProps = {
@@ -51,9 +51,41 @@ function mixHex(a: string, b: string, t: number): string {
 export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [showcaseEngaged, setShowcaseEngaged] = useState(false);
+  const animationFrameRef = useRef<number | null>(null);
+  const progressRef = useRef(0);
+  const isAnimatingRef = useRef(false);
+  const lastAdvanceAtRef = useRef(0);
 
   const frameCount = config.frames.length;
+  const clickToAdvance = config.clickToAdvance ?? false;
+  const clickAdvanceDurationMs = config.clickAdvanceDurationMs ?? 900;
+  const scrollAdvanceCooldownMs =
+    config.scrollAdvanceCooldownMs ?? clickAdvanceDurationMs;
+
+  const getShowcaseEngaged = () => {
+    const section = sectionRef.current;
+    if (!section) {
+      return false;
+    }
+
+    const rect = section.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    return (
+      rect.top <= viewportHeight * 0.3 &&
+      rect.bottom >= viewportHeight * 0.7
+    );
+  };
+
+  const shouldLockScrollDown = () =>
+    clickToAdvance &&
+    progressRef.current < 1 - 0.001 &&
+    getShowcaseEngaged();
+
+  progressRef.current = progress;
+  isAnimatingRef.current = isAnimating;
   const isDartclubShowcase = config.frames.some((frame) =>
     frame.src.includes("/dartclub/"),
   );
@@ -208,7 +240,7 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
   }, []);
 
   useEffect(() => {
-    if (reduceMotion) {
+    if (reduceMotion || clickToAdvance) {
       return;
     }
 
@@ -248,13 +280,240 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
       window.removeEventListener("scroll", onScrollOrResize);
       window.removeEventListener("resize", onScrollOrResize);
     };
-  }, [reduceMotion]);
+  }, [reduceMotion, clickToAdvance]);
+
+  useEffect(
+    () => () => {
+      if (animationFrameRef.current !== null) {
+        window.cancelAnimationFrame(animationFrameRef.current);
+      }
+    },
+    [],
+  );
+
+  const maxStep = Math.max(frameCount - 1, 0);
+
+  const goToStep = useCallback(
+    (targetStep: number) => {
+      const clampedStep = clamp(targetStep, 0, maxStep);
+      const endProgress = maxStep > 0 ? clampedStep / maxStep : 0;
+
+      if (reduceMotion) {
+        setProgress(endProgress);
+        progressRef.current = endProgress;
+        return;
+      }
+
+      if (isAnimatingRef.current) {
+        return;
+      }
+
+      const startProgress = progressRef.current;
+      if (Math.abs(startProgress - endProgress) < 0.001) {
+        return;
+      }
+
+      setIsAnimating(true);
+      isAnimatingRef.current = true;
+      const startTime = performance.now();
+
+      const tick = (now: number) => {
+        const elapsed = now - startTime;
+        const t = clamp(elapsed / clickAdvanceDurationMs, 0, 1);
+        const easedT = easeInOut(t);
+        const nextProgress =
+          startProgress + (endProgress - startProgress) * easedT;
+        setProgress(nextProgress);
+        progressRef.current = nextProgress;
+
+        if (t < 1) {
+          animationFrameRef.current = window.requestAnimationFrame(tick);
+          return;
+        }
+
+        setIsAnimating(false);
+        isAnimatingRef.current = false;
+        animationFrameRef.current = null;
+      };
+
+      if (animationFrameRef.current !== null) {
+        window.cancelAnimationFrame(animationFrameRef.current);
+      }
+      animationFrameRef.current = window.requestAnimationFrame(tick);
+    },
+    [clickAdvanceDurationMs, maxStep, reduceMotion],
+  );
+
+  const tryAdvanceStep = useCallback(
+    (direction: 1 | -1) => {
+      const step = maxStep > 0 ? Math.round(progressRef.current * maxStep) : 0;
+      const targetStep = step + direction;
+
+      if (targetStep < 0 || targetStep > maxStep) {
+        return false;
+      }
+
+      const now = performance.now();
+      if (
+        isAnimatingRef.current ||
+        now - lastAdvanceAtRef.current < scrollAdvanceCooldownMs
+      ) {
+        return true;
+      }
+
+      lastAdvanceAtRef.current = now;
+      goToStep(targetStep);
+      return true;
+    },
+    [goToStep, maxStep, scrollAdvanceCooldownMs],
+  );
+
+  useEffect(() => {
+    if (!clickToAdvance) {
+      return;
+    }
+
+    const updateEngaged = () => {
+      setShowcaseEngaged(getShowcaseEngaged());
+    };
+
+    let rafId = 0;
+    const onScrollOrResize = () => {
+      if (rafId) {
+        return;
+      }
+
+      rafId = window.requestAnimationFrame(() => {
+        updateEngaged();
+
+        if (shouldLockScrollDown()) {
+          const section = sectionRef.current;
+          if (!section) {
+            rafId = 0;
+            return;
+          }
+
+          const rect = section.getBoundingClientRect();
+          if (rect.top < -2) {
+            window.scrollTo({
+              top: section.offsetTop,
+              behavior: "auto",
+            });
+          }
+        }
+
+        rafId = 0;
+      });
+    };
+
+    updateEngaged();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+
+    return () => {
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+    };
+  }, [clickToAdvance]);
+
+  useEffect(() => {
+    if (!clickToAdvance || reduceMotion) {
+      return;
+    }
+
+    const onWheel = (event: WheelEvent) => {
+      if (!getShowcaseEngaged()) {
+        return;
+      }
+
+      const step = maxStep > 0 ? Math.round(progressRef.current * maxStep) : 0;
+
+      if (event.deltaY > 0) {
+        if (step >= maxStep) {
+          return;
+        }
+
+        event.preventDefault();
+        tryAdvanceStep(1);
+        return;
+      }
+
+      if (event.deltaY < 0) {
+        if (step <= 0) {
+          return;
+        }
+
+        event.preventDefault();
+        tryAdvanceStep(-1);
+      }
+    };
+
+    let touchStartY = 0;
+    const onTouchStart = (event: TouchEvent) => {
+      touchStartY = event.touches[0]?.clientY ?? 0;
+    };
+
+    const onTouchEnd = (event: TouchEvent) => {
+      if (!getShowcaseEngaged()) {
+        return;
+      }
+
+      const touchEndY = event.changedTouches[0]?.clientY ?? touchStartY;
+      const deltaY = touchStartY - touchEndY;
+
+      if (Math.abs(deltaY) < 48) {
+        return;
+      }
+
+      const step = maxStep > 0 ? Math.round(progressRef.current * maxStep) : 0;
+
+      if (deltaY > 0) {
+        if (step >= maxStep) {
+          return;
+        }
+        event.preventDefault();
+        tryAdvanceStep(1);
+        return;
+      }
+
+      if (step <= 0) {
+        return;
+      }
+
+      event.preventDefault();
+      tryAdvanceStep(-1);
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [
+    clickToAdvance,
+    maxStep,
+    reduceMotion,
+    scrollAdvanceCooldownMs,
+    tryAdvanceStep,
+  ]);
 
   if (frameCount === 0) {
     return null;
   }
 
-  const pinScrollVh = resolvePinScrollVh(config);
+  const pinScrollVh = clickToAdvance ? 100 : resolvePinScrollVh(config);
+  const activeDotIndex = maxStep > 0 ? Math.round(progress * maxStep) : 0;
+  const dotActiveColor = config.theme?.progress ?? "#0A294F";
+  const dotInactiveColor =
+    config.theme?.progressTrack ??
+    (useSolidBackground ? "rgba(10, 41, 79, 0.22)" : "rgba(233, 231, 218, 0.35)");
 
   const renderDualColumnShowcase = () => {
     const step = reduceMotion ? 0 : dualColumnStep;
@@ -353,10 +612,10 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
     <section
       ref={sectionRef}
       className={`relative left-1/2 mt-10 w-dvw max-w-dvw -translate-x-1/2 ${useSolidBackground ? "bg-[#EEEEEE]" : ""}`}
-      style={{ height: `${pinScrollVh}vh` }}
+      style={{ height: clickToAdvance ? "auto" : `${pinScrollVh}vh` }}
     >
       <div
-        className={`sticky top-0 h-screen overflow-hidden ${useSolidBackground ? "bg-[#EEEEEE]" : ""}`}
+        className={`${clickToAdvance ? "relative h-[100svh]" : "sticky top-0 h-screen"} overflow-hidden ${useSolidBackground ? "bg-[#EEEEEE]" : ""}`}
         style={useSolidBackground ? showcaseBackgroundStyle : undefined}
       >
         <div
@@ -374,27 +633,70 @@ export default function LogoScrollShowcase({ config }: LogoScrollShowcaseProps) 
           </div>
 
           {!reduceMotion ? (
-            <div className="absolute bottom-6 left-1/2 z-20 w-[220px] -translate-x-1/2">
-              <div
-                className="h-1.5 w-full overflow-hidden rounded-full"
-                style={{
-                  backgroundColor:
-                    config.theme?.progressTrack ??
-                    (useSolidBackground
-                      ? "rgba(10, 41, 79, 0.2)"
-                      : "rgba(233, 231, 218, 0.25)"),
-                }}
-              >
+            <div
+              className={`absolute left-1/2 z-20 w-[min(92vw,360px)] -translate-x-1/2 sm:w-[420px] ${
+                clickToAdvance ? "bottom-20 sm:bottom-24" : "bottom-6"
+              }`}
+            >
+              {clickToAdvance ? (
+                <div className="flex flex-col items-center gap-2 sm:gap-3">
+                  {activeDotIndex === 0 ? (
+                    <p
+                      className="text-center text-[10px] font-bold uppercase tracking-widest opacity-70 sm:text-xs"
+                      style={{ color: textColor ?? "#0A294F" }}
+                    >
+                      Scroll om door te gaan
+                    </p>
+                  ) : null}
+                  {activeDotIndex === maxStep && maxStep > 0 ? (
+                    <p
+                      className="text-center text-[10px] font-bold uppercase tracking-widest sm:text-xs"
+                      style={{ color: textColor ?? "#0A294F" }}
+                    >
+                      Je kunt nu verder scrollen
+                    </p>
+                  ) : null}
+                  <div
+                    className="flex items-center justify-center gap-2"
+                    aria-label={`Stap ${activeDotIndex + 1} van ${frameCount}`}
+                  >
+                    {config.frames.map((frame, index) => (
+                      <span
+                        key={`dot-${frame.src}`}
+                        className="h-2.5 w-2.5 rounded-full transition-colors duration-200 sm:h-3 sm:w-3"
+                        style={{
+                          backgroundColor:
+                            index === activeDotIndex
+                              ? dotActiveColor
+                              : dotInactiveColor,
+                        }}
+                        aria-hidden
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : (
                 <div
-                  className="h-full rounded-full transition-[width] duration-100"
+                  className="h-1.5 w-full overflow-hidden rounded-full"
                   style={{
-                    width: `${Math.round(progress * 100)}%`,
                     backgroundColor:
-                      config.theme?.progress ??
-                      (useSolidBackground ? "#0A294F" : "#E9E7DA"),
+                      config.theme?.progressTrack ??
+                      (useSolidBackground
+                        ? "rgba(10, 41, 79, 0.2)"
+                        : "rgba(233, 231, 218, 0.25)"),
                   }}
-                />
-              </div>
+                >
+                  <div
+                    className="h-full rounded-full transition-[width] duration-100"
+                    style={{
+                      width: `${Math.round(progress * 100)}%`,
+                      backgroundColor:
+                        config.theme?.progress ??
+                        (useSolidBackground ? "#0A294F" : "#E9E7DA"),
+                    }}
+                  />
+                </div>
+              )}
             </div>
           ) : null}
         </div>

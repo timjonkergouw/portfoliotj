@@ -15,7 +15,7 @@ export function AboutServices() {
     <div id="diensten" className="mt-10 scroll-mt-24">
       <h3 className="site-section-heading">Diensten</h3>
 
-      <div className="mt-6 grid gap-8 md:grid-cols-2 md:items-start md:gap-12">
+      <div className="site-section-body mt-6 grid gap-8 md:grid-cols-2 md:items-start md:gap-8">
         <div className="hidden md:block">
           <div className="flex flex-col gap-3">
             {services.map((service, index) => (
@@ -92,7 +92,7 @@ export function AboutSkills() {
     >
       <h3 className="site-section-heading">Vaardigheden</h3>
 
-      <div className="mt-10 flex flex-col gap-10 md:flex-row md:items-stretch md:gap-12">
+      <div className="site-section-body mt-10 flex flex-col gap-10 md:flex-row md:items-stretch md:gap-12">
         <div className="flex-1">
           <h3 className="font-heading text-3xl uppercase text-[#292441] md:text-4xl">
             Technische vaardigheden

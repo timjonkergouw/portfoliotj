@@ -1,95 +1,48 @@
-# Tim Jonkergouw Portfolio
+# portfoliotj
 
-Persoonlijke portfolio-website van Tim Jonkergouw. De site presenteert projecten, een uitgebreide about-pagina en contactgegevens. Gebouwd met de Next.js App Router.
+Mijn portfolio-site. Gebouwd met Next.js, vooral om schoolprojecten te laten zien en een beetje over mezelf te vertellen.
 
-## Stack
-
-- Next.js 16
-- React 19
-- TypeScript
-- Tailwind CSS 4
-
-## Pagina's
-
-| Route | Beschrijving |
-|-------|--------------|
-| `/` | Home met hero, about-preview, projectoverzicht |
-| `/about` | About-pagina met fotocollage, diensten, school en vaardigheden |
-| `/projects/[slug]` | Projectdetail (Idee, Ontwerp, Ontwikkeling) |
-
-Beschikbare project-slugs: `fioresque`, `dartclub`, `quality-lodgings`, `rosh`, `vara`.
-
-## Projectstructuur
-
-```
-app/
-  layout.tsx                 # Root layout, fonts, globale footer
-  page.tsx                   # Homepage
-  home-hero.tsx              # Hero met wisselende figuren en gradient
-  globals.css                # Globale styles en animaties
-  about/
-    page.tsx                 # About-pagina (server component)
-    about-data.ts            # Teksten, carousel- en skills-data
-    about-photo-collage.tsx  # Fotocollage (server)
-    about-interactive.tsx    # Diensten-tabs en skills-animatie (client)
-  projects/
-    project-data.ts          # Alle projectcontent en home-kaarten
-    [slug]/page.tsx          # Dynamische projectpagina
-  components/
-    site-header.tsx
-    site-footer.tsx
-    desktop-experience-notice.tsx
-    project-page-layout.tsx
-    inspiration-slideshow.tsx
-    flip-inspiration-cards.tsx
-    logo-scroll-showcase.tsx
-public/                      # Afbeeldingen, SVG's en fonts
-```
-
-## Lokaal draaien
+## Starten
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Daarna op http://localhost:3000
 
-## Scripts
-
-| Commando | Doel |
-|----------|------|
-| `npm run dev` | Development server |
-| `npm run build` | Productie-build |
-| `npm run start` | Productie-server (na build) |
-| `npm run lint` | ESLint |
-
-## Content aanpassen
-
-- **Home en projectkaarten:** `app/projects/project-data.ts` (`getHomeProjectCards`, velden per project)
-- **Projectdetail (tekst, slides, showcases):** `app/projects/project-data.ts`
-- **About (diensten, school, skills, collage):** `app/about/about-data.ts` en `app/about/page.tsx`
-- **Footerlinks:** `app/components/site-footer.tsx`
-- **Navigatie:** `app/components/site-header.tsx`
-- **Hero:** `app/home-hero.tsx`
-- **Statische assets:** `public/`
-
-## Performance
-
-- Zware projectcomponenten (slideshow, flip cards, logo-scroll) worden lazy geladen op projectpagina's.
-- De about-pagina gebruikt server components waar mogelijk; alleen interactieve blokken zijn client-side.
-- Afbeeldingen onder de fold gebruiken lazy loading waar van toepassing.
-
-## Deployment
-
-Deploy op [Vercel](https://vercel.com/) of een andere host met Node.js-ondersteuning. Standaard flow:
+Productie:
 
 ```bash
 npm run build
 npm run start
 ```
 
-## Contact (footer)
+## Wat zit erin
+
+- `/` — home met hero, korte over-mij en projectenlijst
+- `/about` — langere about met fotocollage, diensten, school en skills
+- `/projects/[slug]` — projectpagina's (fioresque, dartclub, quality-lodgings, rosh, vara)
+
+Op mobiel krijg je een melding dat desktop prettiger werkt. Sommige projectonderdelen (slideshows, scroll-showcases) zijn daar ook wat zwaarder.
+
+## Waar pas je dingen aan
+
+Meeste content staat in `app/projects/project-data.ts` (projectteksten, afbeeldingen, showcases).
+
+About: `app/about/about-data.ts` en `app/about/page.tsx`.
+
+Header/footer: `app/components/site-header.tsx` en `site-footer.tsx`.
+
+Hero op home: `app/home-hero.tsx`.
+
+Afbeeldingen en fonts: `public/`.
+
+## Stack
+
+Next.js 16, React 19, TypeScript, Tailwind 4.
+
+## Contact
 
 - timjonkergouw@home.nl
 - 530960@student.fontys.nl

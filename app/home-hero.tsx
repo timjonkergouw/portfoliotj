@@ -77,7 +77,8 @@ export default function HomeHero() {
   }, [incomingFigure, isFigureAnimating]);
 
   return (
-    <section className="relative min-h-[100svh] overflow-hidden rounded-b-[32px] sm:rounded-b-[48px] md:rounded-b-[56px]">
+    <div className="hero-section-shell rounded-b-[32px] sm:rounded-b-[48px] md:rounded-b-[56px]">
+      <section className="relative min-h-[100svh] overflow-hidden rounded-b-[32px] sm:rounded-b-[48px] md:rounded-b-[56px]">
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -193,5 +194,6 @@ export default function HomeHero() {
         </div>
       </div>
     </section>
+    </div>
   );
 }

@@ -13,6 +13,49 @@ export const carouselPhotos = [
   "/carrouselfotos/Foto frame fontys foto.png",
 ] as const;
 
+export const overMijScatterPhotos = [
+  {
+    src: "/carrouselfotos/Foto frame voetbal.png",
+    alt: "Voetbal bij FC Engelen",
+    slotClass: "left-[6%] top-[2%] z-20",
+    floatClass: "about-polaroid-float-a",
+    width: 148,
+    height: 178,
+  },
+  {
+    src: "/carrouselfotos/Foto frame darts.png",
+    alt: "Darten met vrienden",
+    slotClass: "right-[2%] top-[18%] z-30",
+    floatClass: "about-polaroid-float-b",
+    width: 132,
+    height: 162,
+  },
+  {
+    src: "/carrouselfotos/Foto frame Rome.png",
+    alt: "Rome reis",
+    slotClass: "left-0 top-[42%] z-10",
+    floatClass: "about-polaroid-float-c",
+    width: 140,
+    height: 168,
+  },
+  {
+    src: "/carrouselfotos/foto frame guiness.png",
+    alt: "Guinness",
+    slotClass: "right-[8%] bottom-[22%] z-40",
+    floatClass: "about-polaroid-float-d",
+    width: 148,
+    height: 176,
+  },
+  {
+    src: "/carrouselfotos/Foto frame fontys foto.png",
+    alt: "Fontys",
+    slotClass: "left-[22%] bottom-[2%] z-[25]",
+    floatClass: "about-polaroid-float-e",
+    width: 130,
+    height: 158,
+  },
+] as const;
+
 export const services = [
   {
     title: "Webdesign",

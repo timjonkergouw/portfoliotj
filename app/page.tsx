@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import DesktopExperienceNotice from "@/app/components/desktop-experience-notice";
+import HomeProjectsShowcase from "@/app/components/home-projects-showcase";
 import { getHomeProjectCards } from "@/app/projects/project-data";
 import HomeHero from "./home-hero";
 
@@ -16,9 +17,9 @@ export default function Home() {
         <div className="site-shell">
           <div className="h-6 w-full bg-[#CA5521]" />
 
-          <div className="grid gap-8 py-10 sm:gap-10 sm:py-14 md:grid-cols-2 md:items-start md:py-16">
+          <div className="grid items-start gap-6 py-10 sm:gap-6 sm:py-14 md:grid-cols-2 md:gap-5 md:py-16">
             <div>
-              <h3 className="font-heading text-4xl uppercase text-[#292441] sm:text-5xl md:text-6xl">
+              <h3 className="font-heading text-4xl uppercase leading-none text-[#292441] sm:text-5xl md:text-6xl">
                 over mij
               </h3>
               <p className="mt-4 max-w-[520px] text-base font-bold leading-tight tracking-[-0.03em] text-[#1A1633] sm:mt-6 sm:text-lg md:text-xl">
@@ -54,7 +55,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid gap-8 sm:gap-10 md:grid-cols-2 md:items-start">
+          <div className="grid items-start gap-6 sm:gap-6 md:grid-cols-2 md:gap-5">
             <div className="relative h-[220px] overflow-hidden sm:h-[280px] md:h-[340px]">
               <Image
                 src="/st jan bw.png"
@@ -84,7 +85,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex justify-center py-10 sm:py-12">
+          <div className="flex justify-center px-2 py-10 sm:py-12">
             <Link href="/about" className="btn-primary-lg">
               Lees meer
             </Link>
@@ -98,36 +99,7 @@ export default function Home() {
             <div className="h-6 w-full bg-[#CA5521]" />
           </div>
 
-          <div className="relative grid justify-items-center gap-6 py-8 sm:gap-8 sm:py-10 md:block md:min-h-[820px] lg:min-h-[1000px]">
-            {projectCards.map((project) => (
-              <Link
-                key={project.id}
-                href={project.href}
-                className={`project-card group relative z-0 block p-0 hover:z-20 focus-visible:z-20 ${project.cardClass}`}
-              >
-                <div className="project-card-inner origin-center transition-transform duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.06] group-focus-visible:scale-[1.06]">
-                  <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-[#CA5521] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                      No.{project.id}
-                    </p>
-                    <h4 className="font-heading text-lg uppercase text-[#E9E7DA] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] sm:text-xl">
-                      {project.name}
-                    </h4>
-                  </div>
-                  <div className="relative h-[180px] w-full overflow-hidden rounded-none sm:h-[200px] md:h-[230px] lg:h-[260px]">
-                    <Image
-                      src={project.image}
-                      alt={project.name}
-                      fill
-                      sizes="(min-width: 1024px) 560px, (min-width: 768px) 440px, 100vw"
-                      className="object-contain object-center"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <HomeProjectsShowcase projects={projectCards} />
 
           <div className="h-6 w-full bg-[#CA5521]" />
         </div>
