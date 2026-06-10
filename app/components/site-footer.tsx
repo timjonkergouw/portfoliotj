@@ -14,8 +14,8 @@ const projectLinks = [
   { label: "Fioresque", href: "/projects/fioresque" },
   { label: "Dartclub", href: "/projects/dartclub" },
   { label: "Quality Lodgings", href: "/projects/quality-lodgings" },
-  { label: "Rosh", href: "/projects/rosh" },
   { label: "VARA", href: "/projects/vara" },
+  { label: "Rosh", href: "/projects/rosh" },
 ] as const;
 
 const contactLinks = [

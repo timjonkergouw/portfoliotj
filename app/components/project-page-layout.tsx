@@ -16,6 +16,15 @@ const LogoScrollShowcase = dynamic(
 const WorkScreenCarousel = dynamic(
   () => import("@/app/components/work-screen-carousel"),
 );
+const ColorPaletteCarousel = dynamic(
+  () => import("@/app/components/color-palette-carousel"),
+);
+const StylescapeViewer = dynamic(
+  () => import("@/app/components/stylescape-viewer"),
+);
+const WebsiteEmbedPreview = dynamic(
+  () => import("@/app/components/website-embed-preview"),
+);
 
 function SectionHeading({ title }: { title: string }) {
   return <h2 className="site-section-heading">{title}</h2>;
@@ -158,6 +167,28 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
               <InspirationSlideshow slides={section.inspirationSlides} />
             ) : null}
 
+            {section.paletteColors && section.paletteColors.length > 0 ? (
+              <ColorPaletteCarousel colors={section.paletteColors} />
+            ) : null}
+
+            {section.afterPalette ? (
+              <p className="site-section-body mt-6 max-w-[900px] text-base leading-relaxed sm:mt-8 sm:text-lg md:text-xl">
+                {section.afterPalette}
+              </p>
+            ) : null}
+
+            {section.stylescape ? (
+              <StylescapeViewer stylescape={section.stylescape} />
+            ) : null}
+
+            {section.afterStylescape ? (
+              <div className="site-section-body mt-6 max-w-[900px] space-y-4 text-base leading-relaxed sm:mt-8 sm:text-lg md:text-xl">
+                {section.afterStylescape.split("\n\n").map((paragraph) => (
+                  <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+                ))}
+              </div>
+            ) : null}
+
             {section.workScreenSlides && section.workScreenSlides.length > 0 ? (
               <WorkScreenCarousel slides={section.workScreenSlides} />
             ) : null}
@@ -217,12 +248,11 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
                 <h4 className="font-heading text-xl uppercase text-[#292441] md:text-2xl">
                   Live website
                 </h4>
-                <div className="mt-4 overflow-hidden border-2 border-[#292441]/30 bg-[#E9E7DA]/40">
-                  <iframe
+                <div className="mt-4">
+                  <WebsiteEmbedPreview
+                    embedUrl={section.websiteEmbedUrl}
                     title={`${project.title} website preview`}
-                    src={section.websiteEmbedUrl}
-                    className="h-[520px] w-full md:h-[680px]"
-                    allowFullScreen
+                    showRefresh={section.websiteEmbedShowRefresh}
                   />
                 </div>
                 {section.websiteUrl ? (

@@ -21,6 +21,16 @@ export type WorkScreenSlide = {
   alt: string;
 };
 
+export type PaletteColor = {
+  hex: string;
+  name: string;
+};
+
+export type StylescapeConfig = {
+  src: string;
+  alt: string;
+};
+
 type LogoScrollFrame = {
   src: string;
   alt: string;
@@ -67,6 +77,7 @@ type ProjectSection = {
   websiteEmbedUrl?: string;
   websiteUrl?: string;
   websiteEmbedLayout?: "full" | "mobile-side";
+  websiteEmbedShowRefresh?: boolean;
   sectionLogo?: string;
   sectionLogoAlt?: string;
   logoScrollShowcase?: LogoScrollShowcaseConfig;
@@ -74,6 +85,10 @@ type ProjectSection = {
   secondarySlides?: InspirationSlide[];
   flipInspirationCards?: FlipInspirationCard[];
   workScreenSlides?: WorkScreenSlide[];
+  paletteColors?: PaletteColor[];
+  afterPalette?: string;
+  stylescape?: StylescapeConfig;
+  afterStylescape?: string;
 };
 
 export type Project = {
@@ -462,8 +477,57 @@ const projects: Record<string, Project> = {
       },
     ],
   },
-  rosh: {
+  vara: {
     number: "4",
+    title: "VARA",
+    image: "/logoprojects/vara.svg",
+    intro:
+      "Een media-gericht project waarin conceptontwikkeling, visueel ontwerp en technische realisatie in drie stappen zijn doorlopen.",
+    sections: [
+      {
+        id: "idea",
+        title: "Idee",
+        description:
+          "In het afgelopen semester kregen we de opdracht om een eigen media agency op te richten. Na uitgebreid onderzoek te hebben gedaan en de kernwaarden van onze groep te bepalen, gingen we op zoek naar een naam die onze visie goed vertegenwoordigde.\n\nOnze eerste naam was BeeU. Met deze naam wilden we uitstralen dat iedereen zichzelf mag zijn en kan worden wie hij of zij wil zijn. Bij dit concept hadden we ook een bij als logo bedacht. Na verschillende ontwerpen en tests kwamen we echter tot de conclusie dat dit concept toch niet helemaal bij ons paste.\n\nDaarom gingen we verder op zoek naar een nieuwe naam, waarbij we de achterliggende gedachte – dat iedereen zichzelf kan zijn – wilden behouden. We zijn toen gaan kijken naar het werkwoord \"to be\" in verschillende talen. Zo ontdekte ik dat \"to be\" in het Zweeds Vara betekent. Toen ik deze naam met de groep deelde, was iedereen direct enthousiast en waren we het er snel over eens dat dit de naam van onze agency moest worden.\n\nMet de naam Vara zijn we verder gegaan en hebben we een agency ontwikkeld met een stijl en uitstraling die bij ons allemaal past.",
+      },
+      {
+        id: "design",
+        title: "Ontwerp",
+        description:
+          "Omdat de meningen in ons groepje nogal verschilden — de ene wilde veel flitsende, felle kleuren en de ander rustigere pastelkleuren — zijn we gaan kijken of we een soort mix ervan kunnen maken. Na het maken van talloze verschillende kleurencombinaties zijn we uiteindelijk toch op een definitief kleurenpalet uitgekomen. Zo maken we gebruik van wit, grijstinten, blauwtinten en een felgroene kleur om zo toch nog wat felle kleuren toe te voegen.",
+        paletteColors: [
+          { hex: "#246BF6", name: "Digital Blue" },
+          { hex: "#92B5FB", name: "Baby Blue Ice" },
+          { hex: "#FAF9F6", name: "Offwhite" },
+          { hex: "#343231", name: "Offblack" },
+          { hex: "#D9F855", name: "Lime Yellow" },
+        ],
+        afterPalette:
+          "Hierna zijn we aan de slag gegaan met het maken van een stylescape. Met behulp van deze stylescape hebben we de visuele stijl en uitstraling van onze agency verder bepaald. Door verschillende beelden, kleuren, typografie en stijlelementen te combineren, kregen we een duidelijk beeld van de richting die we met onze branding wilden opgaan.",
+        stylescape: {
+          src: "/vara/stylescape vara.svg",
+          alt: "VARA stylescape",
+        },
+        afterStylescape:
+          "Hierna zijn we aan de slag gegaan met het ontwerpen van een website voor onze agency. We hebben geprobeerd om het design zo goed mogelijk aan te laten sluiten bij de stylescape en onze brand guide.\n\nDe website hebben we opgedeeld in vijf onderdelen: een homepagina, een about us pagina, een services pagina waarin we uitleggen wat we aanbieden, een process pagina waarin we onze werkwijze laten zien en een contactpagina. Voor al deze onderdelen hebben we ontwerpen gemaakt.\n\nDe ontwerpen zijn uitgewerkt in Figma. Zie hieronder de link; voel je vrij om deze te bekijken.",
+        figmaEmbedUrl:
+          "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2Fm6d8Sd6nloTjAPQWteNOkp%2FPersonal-Project-VARA%3Fnode-id%3D0-1%26p%3Df%26t%3DL2NsX05vyupSioRb-0",
+        figmaFileUrl:
+          "https://www.figma.com/design/m6d8Sd6nloTjAPQWteNOkp/Personal-Project-VARA?node-id=0-1&p=f&t=L2NsX05vyupSioRb-0",
+      },
+      {
+        id: "develop",
+        title: "Ontwikkeling",
+        description:
+          "Hierna ben ik begonnen met het bouwen van de homepagina. Voor nu heb ik alleen deze pagina uitgewerkt, omdat we verder moesten met de rest van de opdracht. Toch ben ik blij met het resultaat.\n\nIk vind zelf dat de pagina goed is gelukt en sterk lijkt op het oorspronkelijke design. Ook het menu aan de zijkant is gelukt zoals ik het voor ogen had.\n\nDaarnaast heb ik ook gekeken naar de servicepagina van de Fontys minor Virtual Production. Deze pagina is te bereiken via de \"Service\" knop op de homepagina. Deze heb ik opnieuw vormgegeven met een eigen branding, omdat ik vond dat de originele pagina niet goed aansloot bij de inhoud.\n\nDe minor draait juist om het creëren van visuele content en het bouwen van sterke visuals die gebruikt worden als achtergrond in films en andere producties. Het is dus een heel visueel en creatief vakgebied. Juist daarom vond ik dat de informatiepagina dat ook moest uitstralen. In de oorspronkelijke versie gebeurde dat niet, omdat de pagina vrij saai en tekstgericht was.\n\nIn mijn ontwerp heb ik daarom meer nadruk gelegd op beeld, sfeer en visuele elementen, zodat de uitstraling beter past bij wat de minor daadwerkelijk inhoudt.",
+        websiteEmbedUrl: "https://vara-agency.vercel.app/",
+        websiteUrl: "https://vara-agency.vercel.app/",
+        websiteEmbedShowRefresh: true,
+      },
+    ],
+  },
+  rosh: {
+    number: "5",
     title: "ROSH",
     image: "/logoprojects/rosh.svg",
     intro:
@@ -486,33 +550,6 @@ const projects: Record<string, Project> = {
         title: "Ontwikkeling",
         description:
           "Bij develop zijn de designs geïmplementeerd in een digitale omgeving met aandacht voor performance, schaalbaarheid en een soepele gebruikerservaring op verschillende schermformaten.",
-      },
-    ],
-  },
-  vara: {
-    number: "5",
-    title: "VARA",
-    image: "/logoprojects/vara.svg",
-    intro:
-      "Een media-gericht project waarin conceptontwikkeling, visueel ontwerp en technische realisatie in drie stappen zijn doorlopen.",
-    sections: [
-      {
-        id: "idea",
-        title: "Idee",
-        description:
-          "Het concept voor VARA richtte zich op een herkenbare en toegankelijke media-ervaring. De basis was een duidelijke contentstructuur en een verhaal dat de doelgroep direct aanspreekt.",
-      },
-      {
-        id: "design",
-        title: "Ontwerp",
-        description:
-          "In design zijn layouts, hiërarchie en visuele stijl bepaald zodat content overzichtelijk en aantrekkelijk wordt gepresenteerd, met consistent gebruik van merkkleuren en typografie.",
-      },
-      {
-        id: "develop",
-        title: "Ontwikkeling",
-        description:
-          "De develop-fase bracht het ontwerp tot leven met een technische opbouw die content flexibel toont, goed presteert en op alle devices een consistente ervaring biedt.",
       },
     ],
   },
