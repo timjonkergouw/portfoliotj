@@ -30,9 +30,9 @@ type ExpandedModal = {
 const DRAG_THRESHOLD_PX = 10;
 const LOOP_COPIES = 3;
 const AUTO_SCROLL_SPEED = 0.065;
-const AUTO_SCROLL_HOVER_SPEED = 0.032;
 const MAX_FRAME_DELTA_MS = 48;
-const SPEED_LERP = 0.06;
+const SPEED_LERP_RESUME = 0.05;
+const SPEED_LERP_STOP = 0.1;
 const MODAL_TRANSITION_MS = 480;
 
 function getTargetRect(): OriginRect {
@@ -70,7 +70,7 @@ export default function InspirationSlideshow({
   const loopWidthRef = useRef(0);
   const isDragging = useRef(false);
   const hasDragged = useRef(false);
-  const isTrackHovered = useRef(false);
+  const isCardHovered = useRef(false);
   const closeTimeoutRef = useRef<number | null>(null);
   const pointerStartX = useRef(0);
   const scrollStartLeft = useRef(0);
@@ -309,14 +309,16 @@ export default function InspirationSlideshow({
         scrollRef.current.scrollWidth > scrollRef.current.clientWidth;
 
       if (canAutoScroll && scrollRef.current) {
-        const targetSpeed = isTrackHovered.current
-          ? AUTO_SCROLL_HOVER_SPEED
-          : AUTO_SCROLL_SPEED;
-        currentScrollSpeed.current +=
-          (targetSpeed - currentScrollSpeed.current) * SPEED_LERP;
+        const targetSpeed = isCardHovered.current ? 0 : AUTO_SCROLL_SPEED;
+        const speedDelta = targetSpeed - currentScrollSpeed.current;
+        const lerp =
+          speedDelta < 0 ? SPEED_LERP_STOP : SPEED_LERP_RESUME;
+        currentScrollSpeed.current += speedDelta * lerp;
 
-        scrollRef.current.scrollLeft += currentScrollSpeed.current * deltaMs;
-        normalizeScroll();
+        if (Math.abs(currentScrollSpeed.current) > 0.0005) {
+          scrollRef.current.scrollLeft += currentScrollSpeed.current * deltaMs;
+          normalizeScroll();
+        }
       }
 
       animationId = window.requestAnimationFrame(tick);
@@ -435,12 +437,6 @@ export default function InspirationSlideshow({
         <div
           ref={scrollRef}
           className="flex cursor-grab items-center gap-4 overflow-x-auto px-6 py-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          onMouseEnter={() => {
-            isTrackHovered.current = true;
-          }}
-          onMouseLeave={() => {
-            isTrackHovered.current = false;
-          }}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -466,6 +462,12 @@ export default function InspirationSlideshow({
                   ? "opacity-40"
                   : "opacity-100"
               }`}
+              onMouseEnter={() => {
+                isCardHovered.current = true;
+              }}
+              onMouseLeave={() => {
+                isCardHovered.current = false;
+              }}
             >
               <div
                 data-slide-card

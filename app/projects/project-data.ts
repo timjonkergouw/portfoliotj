@@ -16,6 +16,11 @@ export type FlipInspirationCard = {
   backText: string;
 };
 
+export type WorkScreenSlide = {
+  src: string;
+  alt: string;
+};
+
 type LogoScrollFrame = {
   src: string;
   alt: string;
@@ -68,12 +73,14 @@ type ProjectSection = {
   inspirationSlides?: InspirationSlide[];
   secondarySlides?: InspirationSlide[];
   flipInspirationCards?: FlipInspirationCard[];
+  workScreenSlides?: WorkScreenSlide[];
 };
 
 export type Project = {
   number: string;
   title: string;
   image: string;
+  pageLogo?: string;
   headerLogoClassName?: string;
   headerLogoSizes?: string;
   intro: string;
@@ -266,9 +273,10 @@ const projects: Record<string, Project> = {
     number: "2",
     title: "Dartclub",
     image: "/logoprojects/dartclub.svg",
+    pageLogo: "/dartclub/dartclub logo transparant.svg",
     headerLogoClassName:
-      "h-[200px] max-w-[800px] md:h-[300px] md:max-w-[1100px]",
-    headerLogoSizes: "(min-width: 768px) 1100px, 800px",
+      "h-[130px] w-[min(40vw,200px)] sm:h-[190px] sm:w-[min(36vw,280px)] md:h-[250px] md:w-[min(34vw,380px)] lg:h-[320px] lg:w-[min(32vw,480px)] xl:h-[360px] xl:w-[min(30vw,540px)]",
+    headerLogoSizes: "(min-width: 1280px) 540px, (min-width: 768px) 480px, 200px",
     intro:
       "Een project rondom een dartclub waarin identiteit, visuele communicatie en digitale presentatie in drie fases zijn uitgewerkt.",
     sections: [
@@ -320,7 +328,7 @@ const projects: Record<string, Project> = {
             progress: "#0A294F",
             progressTrack: "rgba(10, 41, 79, 0.2)",
           },
-          textStepLogo: "/logoprojects/dartclub.svg",
+          textStepLogo: "/dartclub/dartclub logo transparant.svg",
           textStepLogoAlt: "Dartclub",
           frames: [
             {
@@ -382,8 +390,6 @@ const projects: Record<string, Project> = {
         websiteEmbedUrl: "https://dartclub.vercel.app/",
         websiteUrl: "https://dartclub.vercel.app/",
         websiteEmbedLayout: "mobile-side",
-        sectionLogo: "/logoprojects/dartclub.svg",
-        sectionLogoAlt: "Dartclub",
       },
     ],
   },
@@ -392,8 +398,8 @@ const projects: Record<string, Project> = {
     title: "Quality Lodgings",
     image: "/logoprojects/ql.svg",
     headerLogoClassName:
-      "h-[140px] max-w-[640px] md:h-[200px] md:max-w-[900px]",
-    headerLogoSizes: "(min-width: 768px) 900px, 640px",
+      "h-[120px] w-[min(38vw,180px)] sm:h-[170px] sm:w-[min(34vw,240px)] md:h-[220px] md:w-[min(32vw,320px)] lg:h-[280px] lg:w-[min(30vw,400px)] xl:h-[320px] xl:w-[min(28vw,460px)]",
+    headerLogoSizes: "(min-width: 1280px) 460px, (min-width: 768px) 400px, 180px",
     intro:
       "Een hospitality-project waarin opdracht en design samenkomen voor een premium lodging-ervaring.",
     sections: [
@@ -410,7 +416,49 @@ const projects: Record<string, Project> = {
         id: "design",
         title: "Design",
         description:
-          "De visuele richting benadrukt rust, elegantie en helderheid. Typografie, beeldtaal en layout zijn ontworpen om informatie over verblijven overzichtelijk en aantrekkelijk te presenteren.",
+          "Binnen dit project heb ik gewerkt aan de pagina \"Verras mij\". Deze pagina is bedoeld voor mensen die nog niet weten waar ze naartoe willen of wat voor soort vakantie ze zoeken. Door een aantal korte vragen over interesses en voorkeuren te beantwoorden, helpt het systeem bij het vinden van een bestemming die het beste bij de gebruiker past.\n\nDe UX en UI van deze pagina waren echter niet optimaal. Daarom heb ik onderzoek gedaan naar de gebruikerservaring en op basis daarvan een nieuw ontwerp gemaakt.\n\nHieronder volgt een korte slideshow waarin ik de verbeterpunten van verschillende onderdelen van de pagina toelicht. Eerst laat ik zien hoe de pagina er oorspronkelijk uitzag, waarna ik in de volgende slide mijn vernieuwde ontwerp presenteer.",
+        workScreenSlides: [
+          {
+            src: "/ql/verbeterpunten vind jouw style.svg",
+            alt: "Verbeterpunten vind jouw stijl",
+          },
+          {
+            src: "/ql/vind jouw stijl.svg",
+            alt: "Vind jouw stijl — origineel",
+          },
+          {
+            src: "/ql/verbeterpunten landen.svg",
+            alt: "Verbeterpunten landen",
+          },
+          {
+            src: "/ql/stap 1 landen.svg",
+            alt: "Stap 1 landen — origineel",
+          },
+          {
+            src: "/ql/verbeterpunten ligging.svg",
+            alt: "Verbeterpunten ligging",
+          },
+          {
+            src: "/ql/stap 2 ligging.svg",
+            alt: "Stap 2 ligging — origineel",
+          },
+          {
+            src: "/ql/verbeterpunten intresses.svg",
+            alt: "Verbeterpunten interesses",
+          },
+          {
+            src: "/ql/stap 3 intresses.svg",
+            alt: "Stap 3 interesses — origineel",
+          },
+          {
+            src: "/ql/verbeterpunten stijlen.svg",
+            alt: "Verbeterpunten stijlen",
+          },
+          {
+            src: "/ql/stap 4 stijlen.svg",
+            alt: "Stap 4 stijlen — origineel",
+          },
+        ],
       },
     ],
   },

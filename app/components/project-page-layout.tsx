@@ -13,6 +13,9 @@ const InspirationSlideshow = dynamic(
 const LogoScrollShowcase = dynamic(
   () => import("@/app/components/logo-scroll-showcase"),
 );
+const WorkScreenCarousel = dynamic(
+  () => import("@/app/components/work-screen-carousel"),
+);
 
 function SectionHeading({ title }: { title: string }) {
   return <h2 className="site-section-heading">{title}</h2>;
@@ -37,34 +40,36 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
           </Link>
 
           <div className="mt-6 sm:mt-8">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.18em] text-[#CA5521]">
-                No.{project.number}
-              </p>
+            <p className="text-[10px] uppercase tracking-[0.18em] text-[#CA5521]">
+              No.{project.number}
+            </p>
+            <div className="mt-3 flex items-start justify-between gap-4 sm:gap-6 md:gap-10 lg:gap-12">
+              <div className="min-w-0 flex-1">
+                <h1 className="font-heading text-4xl uppercase leading-[0.9] sm:text-5xl md:text-6xl lg:text-7xl">
+                  {project.title}
+                </h1>
+                <p className="mt-4 max-w-[520px] text-base font-bold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-lg">
+                  {project.intro}
+                </p>
+              </div>
               <div
-                className={`relative mt-3 w-full ${
+                className={`relative shrink-0 overflow-visible ${
                   project.headerLogoClassName ??
-                  "h-[140px] max-w-[640px] md:h-[200px] md:max-w-[900px]"
+                  "h-[120px] w-[min(38vw,180px)] sm:h-[170px] sm:w-[min(34vw,240px)] md:h-[220px] md:w-[min(32vw,320px)] lg:h-[280px] lg:w-[min(30vw,400px)] xl:h-[320px] xl:w-[min(28vw,460px)]"
                 }`}
               >
                 <Image
-                  src={project.image}
+                  src={project.pageLogo ?? project.image}
                   alt={`${project.title} logo`}
                   fill
                   sizes={
                     project.headerLogoSizes ??
-                    "(min-width: 768px) 900px, 640px"
+                    "(min-width: 1280px) 460px, (min-width: 768px) 400px, 180px"
                   }
-                  className="object-contain object-left"
+                  className="origin-right scale-[1.1] object-contain object-right"
                   priority
                 />
               </div>
-              <h1 className="font-heading mt-2 text-4xl uppercase leading-[0.9] sm:text-5xl md:text-6xl lg:text-7xl">
-                {project.title}
-              </h1>
-              <p className="mt-4 max-w-[520px] text-base font-bold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-lg">
-                {project.intro}
-              </p>
             </div>
           </div>
         </div>
@@ -80,7 +85,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
             section.websiteEmbedLayout === "mobile-side" ? (
               <div className="mt-4 grid gap-8 sm:mt-6 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-stretch lg:gap-10">
                 <div className="flex flex-col">
-                  <div className="space-y-4 text-base leading-relaxed sm:text-lg md:text-xl">
+                  <div className="site-section-body space-y-4 text-base leading-relaxed sm:text-lg md:text-xl">
                     {section.description.split("\n\n").map((paragraph) => (
                       <p key={paragraph.slice(0, 24)}>{paragraph}</p>
                     ))}
@@ -136,7 +141,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
                 </div>
               </div>
             ) : (
-              <div className="mt-4 max-w-[900px] space-y-4 text-base leading-relaxed sm:mt-6 sm:text-lg md:text-xl">
+              <div className="site-section-body mt-4 max-w-[900px] space-y-4 text-base leading-relaxed sm:mt-6 sm:text-lg md:text-xl">
                 {section.description.split("\n\n").map((paragraph) => (
                   <p key={paragraph.slice(0, 24)}>{paragraph}</p>
                 ))}
@@ -153,8 +158,12 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
               <InspirationSlideshow slides={section.inspirationSlides} />
             ) : null}
 
+            {section.workScreenSlides && section.workScreenSlides.length > 0 ? (
+              <WorkScreenCarousel slides={section.workScreenSlides} />
+            ) : null}
+
             {section.afterInspiration ? (
-              <p className="mt-6 max-w-[900px] text-base leading-relaxed sm:mt-8 sm:text-lg md:text-xl">
+              <p className="site-section-body mt-6 max-w-[900px] text-base leading-relaxed sm:mt-8 sm:text-lg md:text-xl">
                 {section.afterInspiration}
               </p>
             ) : null}
@@ -167,7 +176,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
             ) : null}
 
             {section.figmaEmbedUrl ? (
-              <div className="mt-8">
+              <div className="site-section-body mt-8">
                 <h4 className="font-heading text-xl uppercase text-[#292441] md:text-2xl">
                   Interactieve Figma
                 </h4>
@@ -193,7 +202,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
             ) : null}
 
             {section.afterFigma ? (
-              <p className="mt-6 max-w-[900px] text-base leading-relaxed sm:mt-8 sm:text-lg md:text-xl">
+              <p className="site-section-body mt-6 max-w-[900px] text-base leading-relaxed sm:mt-8 sm:text-lg md:text-xl">
                 {section.afterFigma}
               </p>
             ) : null}
@@ -204,7 +213,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
 
             {section.websiteEmbedUrl &&
             section.websiteEmbedLayout !== "mobile-side" ? (
-              <div className="mt-8">
+              <div className="site-section-body mt-8">
                 <h4 className="font-heading text-xl uppercase text-[#292441] md:text-2xl">
                   Live website
                 </h4>
