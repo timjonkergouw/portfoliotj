@@ -157,6 +157,33 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
               </div>
             )}
 
+            {section.websiteEmbedUrl &&
+            section.websiteEmbedAfterDescription &&
+            section.websiteEmbedLayout !== "mobile-side" ? (
+              <div className="site-section-body mt-8">
+                <h4 className="font-heading text-xl uppercase text-[#292441] md:text-2xl">
+                  Interactieve pagina
+                </h4>
+                <div className="mt-4">
+                  <WebsiteEmbedPreview
+                    embedUrl={section.websiteEmbedUrl}
+                    title={`${project.title} interactieve pagina`}
+                    showRefresh={section.websiteEmbedShowRefresh}
+                  />
+                </div>
+                {section.websiteUrl ? (
+                  <Link
+                    href={section.websiteUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-3 inline-block text-sm uppercase tracking-[0.08em] text-[#292441] underline underline-offset-4 hover:opacity-70"
+                  >
+                    Open pagina in nieuw tabblad
+                  </Link>
+                ) : null}
+              </div>
+            ) : null}
+
             {section.flipInspirationCards &&
             section.flipInspirationCards.length > 0 ? (
               <FlipInspirationCards cards={section.flipInspirationCards} />
@@ -243,6 +270,7 @@ export default function ProjectPageLayout({ project }: ProjectPageLayoutProps) {
             ) : null}
 
             {section.websiteEmbedUrl &&
+            !section.websiteEmbedAfterDescription &&
             section.websiteEmbedLayout !== "mobile-side" ? (
               <div className="site-section-body mt-8">
                 <h4 className="font-heading text-xl uppercase text-[#292441] md:text-2xl">

@@ -78,6 +78,7 @@ type ProjectSection = {
   websiteUrl?: string;
   websiteEmbedLayout?: "full" | "mobile-side";
   websiteEmbedShowRefresh?: boolean;
+  websiteEmbedAfterDescription?: boolean;
   sectionLogo?: string;
   sectionLogoAlt?: string;
   logoScrollShowcase?: LogoScrollShowcaseConfig;
@@ -537,19 +538,26 @@ const projects: Record<string, Project> = {
         id: "idea",
         title: "Idee",
         description:
-          "ROSH startte vanuit een helder merkverhaal en doelgroepbeeld. Het idee was een sterke, moderne identiteit neer te zetten die direct communiceert wat het merk uniek maakt.",
+          "We kregen van het bedrijf Rosh de opdracht om een toernooipagina te ontwikkelen die zij eenvoudig zelf kunnen aanpassen via een soort backendsysteem. Deze pagina was bedoeld voor een game-evenement tijdens Comic Con.\n\nDaarom zijn we gaan onderzoeken wat de beste aanpak zou zijn. Uiteindelijk kwamen we op het idee om een website te maken waarmee gebruikers eenvoudig hun eigen pagina kunnen ontwerpen. Daarnaast hebben we geëxperimenteerd met een functie waarbij gebruikers een aantal vragen beantwoorden, waarna AI automatisch een website voor hen genereert.",
       },
       {
         id: "design",
         title: "Ontwerp",
         description:
-          "De design-fase vertaalde het concept naar visuele bouwstenen: logo, kleuren, typografie en interfacecomponenten die samen een consistente merkbeleving vormen.",
+          "Voor deze opdracht heb ik mij vooral beziggehouden met het ontwerpen en ontwikkelen van de gepersonaliseerde pagina. Hiermee kunnen gebruikers via een overzichtelijk menu hun eigen toernooipagina samenstellen, waarbij de gebruikerservaring centraal staat.\n\nDe onderstaande ontwerpen hebben we meerdere keren getest en verbeterd om de pagina zo gebruiksvriendelijk mogelijk te maken.",
+        figmaEmbedUrl:
+          "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FeRWhLqbvrsSmgmw0l2mpmY%2FRosh-project-personal-portfolio%3Fnode-id%3D0-1%26p%3Df%26t%3DAMW9IS9JnIFRVxGD-0",
+        figmaFileUrl:
+          "https://www.figma.com/design/eRWhLqbvrsSmgmw0l2mpmY/Rosh-project-personal-portfolio?node-id=0-1&p=f&t=AMW9IS9JnIFRVxGD-0",
       },
       {
         id: "develop",
         title: "Ontwikkeling",
         description:
-          "Bij develop zijn de designs geïmplementeerd in een digitale omgeving met aandacht voor performance, schaalbaarheid en een soepele gebruikerservaring op verschillende schermformaten.",
+          "Dit is de gepersonaliseerde pagina. Hier kunnen gebruikers hun eigen toernooipagina aanmaken en verschillende onderdelen naar wens aanpassen. Omdat we voor deze opdracht beperkt de tijd hadden, hebben we niet alle functies volledig kunnen afronden. Er staat echter al een solide basis waarmee je goed bruikbare websites kunt maken.\n\nDaarnaast hebben we een Template Wizard ontwikkeld. Deze functie staat momenteel echter uitgeschakeld, omdat het genereren van websites met AI kosten met zich meebrengt. Wanneer iedereen hier onbeperkt gebruik van zou kunnen maken, zouden de kosten te hoog oplopen.",
+        websiteEmbedUrl: "https://roshproject.vercel.app/custom",
+        websiteUrl: "https://roshproject.vercel.app/custom",
+        websiteEmbedAfterDescription: true,
       },
     ],
   },
