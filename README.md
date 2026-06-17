@@ -1,139 +1,141 @@
-# Portfolio Tim Jonkergouw
+# portfoliotj — notes for future me
 
-Dit is de broncode van mijn portfolio-website: de site waar ik mezelf laat zien en mijn schoolprojecten presenteer. Alles wat je op de live site ziet (teksten, foto's, projectpagina's, animaties) komt uit dit project.
-
-Je hoeft niet te kunnen programmeren om de site te **bekijken** of om te snappen **wat erin zit**. Voor **tekst of plaatjes aanpassen** heb je wel een beetje hulp nodig of moet je in bestanden durven kijken — daaronder leg ik uit waar wat staat.
+My personal portfolio site. School projects, a bit about who I am, and contact info. This repo is mine — not a team handover. When I come back to this in six months and forgot how anything works, this file is the reminder.
 
 ---
 
-## Wat is dit eigenlijk?
+## What this is
 
-Stel je een map op je computer voor met alle onderdelen van de website: pagina's, teksten, afbeeldingen en instellingen. Die map is dit project. Met een programma (Node.js) kun je de site op je eigen computer starten, alsof die online staat. Zo kun je wijzigingen bekijken voordat je ze publiceert.
+A single-page-style portfolio built with Next.js. Five project case studies (Fioresque, Dartclub, Quality Lodgings, VARA, ROSH), an about page, and a homepage with a hero, short intro, and project index.
 
-De site is gebouwd met **Next.js** — een veelgebruikt framework voor moderne websites. Daar hoef je als lezer niets van te weten; het is vooral de techniek erachter.
+Some pages go further than static text: auto-scrolling inspiration carousels, scroll-driven logo showcases (Fioresque + Dartclub), a fullscreen color strip on VARA, Figma embeds, and live Vercel iframes (Fioresque, Dartclub, QL, VARA, ROSH). Most of that behaviour lives in reusable components; the actual copy and media paths sit in one big data file.
 
----
+Hosted on Vercel. Push to GitHub → Vercel rebuilds.
 
-## Welke pagina's zijn er?
-
-| Wat je in de browser typt | Wat je ziet |
-|---------------------------|-------------|
-| Startpagina (home) | Grote intro met foto's, korte tekst over mij en een overzicht van alle projecten |
-| `/about` | Uitgebreide about-pagina: wie ik ben, diensten, schoolloopbaan en skills |
-| `/projects/fioresque` | Project Fioresque |
-| `/projects/dartclub` | Project Dartclub |
-| `/projects/quality-lodgings` | Project Quality Lodgings |
-| `/projects/vara` | Project VARA |
-| `/projects/rosh` | Project ROSH |
-
-Elke projectpagina heeft vaste onderdelen (bijvoorbeeld Idee, Ontwerp, Ontwikkeling) met tekst, afbeeldingen en soms ingesloten sites (Figma, Vercel).
-
-Op een telefoon werkt de site ook, maar sommige onderdelen (grote slideshows, scroll-animaties) zijn bedoeld voor desktop. Op mobiel krijg je daar een korte melding over.
+**Live site:** [INSERT VERCEL LINK]
 
 ---
 
-## De site lokaal bekijken (op je eigen computer)
+## Stack
 
-Hiervoor moet **Node.js** op je computer staan. Dat kun je gratis downloaden op [nodejs.org](https://nodejs.org/) (kies de aanbevolen versie en installeer met de standaardopties).
+- **Next.js 16** (App Router)
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS 4**
 
-Daarna, in een terminal (op Windows: PowerShell of Command Prompt):
+No database, no CMS. Content is mostly hardcoded in `project-data.ts` and `about-data.ts`.
 
-1. Ga naar de map van dit project (waar dit bestand staat).
-2. Voer eenmalig uit om alles te installeren:
+---
+
+## Run it locally
+
+From the project root:
 
 ```bash
 npm install
-```
-
-3. Start de site:
-
-```bash
 npm run dev
 ```
 
-4. Open in je browser: **http://localhost:3000**
+Open http://localhost:3000
 
-De site draait nu op je eigen pc. Sluit de terminal of stop het proces om hem weer uit te zetten.
-
-**Let op:** `localhost` betekent dat de site alleen op jouw computer zichtbaar is, niet op internet.
-
----
-
-## Online zetten (publiceren)
-
-De live versie staat meestal op **Vercel** (gratis hosting voor dit soort projecten). Als jij het project beheert:
-
-1. Wijzigingen opslaan in Git (GitHub).
-2. Vercel koppelt automatisch aan die repository en bouwt de site opnieuw.
-
-Zonder Vercel/Git kun je lokaal een productieversie maken:
+Before deploying or when something feels off in prod:
 
 ```bash
 npm run build
 npm run start
 ```
 
-Dat is vooral handig om te testen of alles goed werkt vóór je online gaat.
+Lint if I touched a lot of files:
 
----
-
-## Waar staat wat? (voor als je iets wilt aanpassen)
-
-Alles zit in mappen. De belangrijkste:
-
-### `app/projects/project-data.ts`
-**Hier staat bijna alle projectinhoud.** Per project: titel, intro, teksten per sectie, links naar Figma/Vercel, lijsten met afbeeldingen voor slideshows, kleurenpalet VARA, enzovoort. Als je een projecttekst wilt wijzigen, begin hier.
-
-### `app/about/about-data.ts`
-Teksten en data voor de about-pagina: diensten, school, skills, foto's voor de collage.
-
-### `app/about/page.tsx` en `app/page.tsx`
-De opbouw van de about-pagina en de homepage (welke blokken waar staan).
-
-### `app/home-hero.tsx`
-De grote bovenkant van de homepage (naam, wisselende foto's, achtergrond).
-
-### `app/components/`
-Herbruikbare onderdelen: menu, footer, slideshows, projectpagina-layout, enz. Meestal hoef je hier niet in te zijn tenzij je gedrag of layout wilt veranderen.
-
-### `public/`
-Alle **afbeeldingen, logo's, SVG's en lettertypes**. Bestanden hier kun je vervangen door een nieuw bestand met **dezelfde bestandsnaam**, of je past in `project-data.ts` het pad naar een nieuw bestand aan (bijv. `/logoprojects/vara.svg`).
-
----
-
-## Handige commando's (overzicht)
-
-| Commando | Wat het doet |
-|----------|----------------|
-| `npm install` | Eenmalig (of na updates): benodigde software voor het project downloaden |
-| `npm run dev` | Site starten om te bekijken en te testen tijdens het werken |
-| `npm run build` | Een definitieve versie van de site bouwen |
-| `npm run start` | Die gebouwde versie lokaal draaien |
-| `npm run lint` | Controleren op veelvoorkomende fouten in de code (voor developers) |
-
----
-
-## Structuur in het kort
-
-```
-app/                 → pagina's en logica van de website
-  page.tsx           → homepage
-  about/             → about-pagina
-  projects/          → projectpagina's + alle projectteksten (project-data.ts)
-  components/        → menu, footer, carrousels, enz.
-public/              → plaatjes, logo's, fonts
+```bash
+npm run lint
 ```
 
 ---
 
-## Contact
+## Folder map (where to look first)
 
-- timjonkergouw@home.nl  
-- 530960@student.fontys.nl  
-- +31 6 22 35 05 86  
+```
+app/
+  page.tsx                    → homepage
+  home-hero.tsx               → hero with rotating figures + gradient
+  layout.tsx                  → fonts, global footer
+  globals.css                 → site-wide styles, buttons, background
+
+  about/
+    page.tsx                  → about page layout
+    about-data.ts             → services, school timeline, skills, photos
+    about-interactive.tsx     → client bits (tabs, skill animation)
+    about-photo-collage.tsx   → top collage
+    about-over-mij-photos.tsx → polaroid scatter in Over mij
+
+  projects/
+    project-data.ts           → ★ almost all project content lives here
+    [slug]/page.tsx           → dynamic route, one template for all projects
+
+  components/
+    site-header.tsx / site-footer.tsx
+    project-page-layout.tsx   → shared project page shell + section rendering
+    home-projects-showcase.tsx
+    inspiration-slideshow.tsx → Fioresque-style carousel (hover pauses on card)
+    logo-scroll-showcase.tsx  → Fioresque + Dartclub scroll showcase
+    color-palette-carousel.tsx
+    stylescape-viewer.tsx
+    work-screen-carousel.tsx  → QL design fullscreen slideshow
+    website-embed-preview.tsx → Vercel iframe + optional Refresh button
+    flip-inspiration-cards.tsx
+    desktop-experience-notice.tsx
+
+public/
+  logoprojects/               → project logos (home + headers)
+  fioresque/, dartclub/, ql/, vara/, rosh/  → project assets
+  carrouselfotos/             → about photos
+  fonts/                      → Alte Haas Grotesk
+  portfolio.svg               → repeating body background
+```
 
 ---
 
-## Voor developers (kort)
+## Things to remember when I continue
 
-Stack: Next.js 16, React 19, TypeScript, Tailwind CSS 4. Zware onderdelen (slideshows, scroll-showcases) worden lazy geladen op projectpagina's.
+**Content changes** → start in `app/projects/project-data.ts`. Sections support description, Figma URLs, Vercel embeds, slideshows, palette colors, stylescape image, etc. About page copy → `about-data.ts`.
+
+**Figma links** → use the embed URL format (`figma.com/embed?embed_host=share&url=...`), not the normal design link. Copy the pattern from Fioresque or VARA in `project-data.ts`.
+
+**Project header** → one `image` per project (logo). Optional `pageLogo` if the page needs a different file (Dartclub uses `dartclub logo transparant.svg`). Don't set `image` and a duplicate header logo — layout only shows one logo next to the title.
+
+**Vercel embed placement** → default embed shows at the bottom of a section (“Live website”). For embed right under the section text (ROSH develop), set `websiteEmbedAfterDescription: true`. VARA develop uses `websiteEmbedShowRefresh: true` so users can reset the iframe after clicking through to the Fontys minor page.
+
+**Full-bleed blocks** → carousels and showcases break out of the content column with `w-dvw` and negative margins. Normal text uses `site-section-body` so it lines up with the pill-shaped section headings (same as about page).
+
+**Performance** → heavy project components are `dynamic()` imported in `project-page-layout.tsx`. Don't eagerly import slideshow/showcase stuff on the homepage.
+
+**Mobile** → `desktop-experience-notice.tsx` shows once on small screens. Some interactions (scroll showcases, big carousels) are desktop-first by design.
+
+**Next.js version** → this project uses a newer Next with breaking changes vs older tutorials. Check `node_modules/next/dist/docs/` or `AGENTS.md` before assuming old App Router patterns still apply.
+
+**Assets** → replace files in `public/` keeping the same path, or update the path in `project-data.ts`. Project logos for the home list: `/logoprojects/*.svg`.
+
+**Project order** → object key order in `project-data.ts` + `number` field control homepage order. Currently: 1 Fioresque, 2 Dartclub, 3 QL, 4 VARA, 5 ROSH.
+
+---
+
+## Pages quick reference
+
+| Route | What's there |
+|-------|----------------|
+| `/` | Hero, over mij preview, project list |
+| `/about` | Collage, over mij, diensten, school, skills |
+| `/projects/fioresque` | Idea / design / develop + logo scroll + Figma |
+| `/projects/dartclub` | Idea / design / develop + flip cards + scroll showcase + mobile Vercel |
+| `/projects/quality-lodgings` | Opdracht + design with fullscreen before/after carousel |
+| `/projects/vara` | Idea / design (palette + stylescape + Figma) / develop + Vercel |
+| `/projects/rosh` | Idea / design (Figma) / develop (custom editor Vercel) |
+
+---
+
+## Contact (on the site footer anyway)
+
+- timjonkergouw@home.nl
+- 530960@student.fontys.nl
+- +31 6 22 35 05 86

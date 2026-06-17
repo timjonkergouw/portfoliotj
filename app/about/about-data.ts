@@ -1,21 +1,21 @@
 export const slotPalette = ["#020118", "#292541", "#E9E7DA", "#B6AFA9", "#CA5521"];
 
 export const carouselPhotos = [
-  "/carrouselfotos/Foto frame Rome.png",
+  "/carrouselfotos/foto frame rome.png",
   "/carrouselfotos/foto frame purple festival.png",
-  "/carrouselfotos/Foto frame voetbal.png",
+  "/carrouselfotos/foto frame voetbal.png",
   "/carrouselfotos/foto frame diploma.png",
-  "/carrouselfotos/Foto frame darts.png",
+  "/carrouselfotos/foto frame darts.png",
   "/carrouselfotos/foto frame propodeuse.png",
-  "/carrouselfotos/Foto frame guiness.png",
+  "/carrouselfotos/foto frame guiness.png",
   "/carrouselfotos/foto frame rooftop.png",
   "/carrouselfotos/foto frame psv.png",
-  "/carrouselfotos/Foto frame fontys foto.png",
+  "/carrouselfotos/foto frame fontys foto.png",
 ] as const;
 
 export const overMijScatterPhotos = [
   {
-    src: "/carrouselfotos/Foto frame voetbal.png",
+    src: "/carrouselfotos/foto frame voetbal.png",
     alt: "Voetbal bij FC Engelen",
     slotClass: "left-[6%] top-[2%] z-20",
     floatClass: "about-polaroid-float-a",
@@ -23,7 +23,7 @@ export const overMijScatterPhotos = [
     height: 178,
   },
   {
-    src: "/carrouselfotos/Foto frame darts.png",
+    src: "/carrouselfotos/foto frame darts.png",
     alt: "Darten met vrienden",
     slotClass: "right-[2%] top-[18%] z-30",
     floatClass: "about-polaroid-float-b",
@@ -31,7 +31,7 @@ export const overMijScatterPhotos = [
     height: 162,
   },
   {
-    src: "/carrouselfotos/Foto frame Rome.png",
+    src: "/carrouselfotos/foto frame rome.png",
     alt: "Rome reis",
     slotClass: "left-0 top-[42%] z-10",
     floatClass: "about-polaroid-float-c",
@@ -47,7 +47,7 @@ export const overMijScatterPhotos = [
     height: 176,
   },
   {
-    src: "/carrouselfotos/Foto frame fontys foto.png",
+    src: "/carrouselfotos/foto frame fontys foto.png",
     alt: "Fontys",
     slotClass: "left-[22%] bottom-[2%] z-[25]",
     floatClass: "about-polaroid-float-e",
