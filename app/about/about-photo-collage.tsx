@@ -75,7 +75,7 @@ export default function AboutPhotoCollage() {
                             >
                               <Image
                                 src={item.src}
-                                alt={`Carousel foto ${columnIndex + 1}-${itemIndex + 1}`}
+                                alt={`carousel foto ${columnIndex + 1}-${itemIndex + 1}`}
                                 fill
                                 sizes="(min-width: 980px) 16vw, 160px"
                                 className="object-cover"
